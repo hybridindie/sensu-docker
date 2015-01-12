@@ -11,8 +11,8 @@ apt-get -y --allow-unauthenticated --force-yes install rabbitmq-server
 chown -R rabbitmq:rabbitmq /etc/rabbitmq/
 
 mkdir -p /etc/rabbitmq/ssl
-cp /tmp/sensu_ca/cacert.pem /etc/rabbitmq/ssl
-cp /tmp/server/*.pem /etc/rabbitmq/ssl
+cp /sensu_ca/cacert.pem /etc/rabbitmq/ssl
+cp /server/*.pem /etc/rabbitmq/ssl
 
 /etc/init.d/rabbitmq-server restart
 
@@ -22,7 +22,7 @@ rabbitmqctl add_user sensu sensu
 rabbitmqctl set_permissions -p /sensu sensu ".*" ".*" ".*"
 rabbitmq-plugins enable rabbitmq_management
 
-apt-get install redis-server
+apt-get -y install redis-server
 
 wget -q http://repos.sensuapp.org/apt/pubkey.gpg -O- | apt-key add -
 echo "deb     http://repos.sensuapp.org/apt sensu main" > /etc/apt/sources.list.d/sensu.list
