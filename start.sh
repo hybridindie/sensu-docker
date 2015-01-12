@@ -12,5 +12,3 @@ rabbitmqctl set_user_tags sensu administrator
 /etc/init.d/sensu-server start
 /etc/init.d/sensu-api start
 /etc/init.d/sensu-client start
-/etc/init.d/sensu-dashboard start
-/usr/sbin/sshd -D -o UseDNS=no -o UsePAM=no
