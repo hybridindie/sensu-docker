@@ -2,7 +2,7 @@ FROM ubuntu:trusty
 MAINTAINER John Dilts <john.dilts@enstratius.com>
 
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise universe" >> /etc/apt/sources.list
-RUN apt-get install -y curl
+RUN apt-get install -y curl wget
 # RUN echo '127.0.0.1 localhost.localdomain localhost' >> /etc/hosts
 RUN useradd -d /home/sensu -m -s /bin/bash sensu
 RUN echo sensu:sensu | chpasswd
