@@ -1,16 +1,22 @@
-sensu-docker
+Sensu
 ============
 
 Dockerfile to Create a Sensu Server
 
-Grab the container from the docker index here.  https://index.docker.io/u/petecheslock/sensu/
-
 In some cases it's faster to build the docker container locally rather than pulling from the index.
-`sudo docker build github.com/petecheslock/sensu-docker`
+`sudo docker build github.com/jbrien/sensu-docker`
 
-This is for testing only - SSL is not setup/configured for the server and clients.
+Run the RabbitMQ Container https://registry.hub.docker.com/_/rabbitmq/
+`docker run -d -e RABBITMQ_NODENAME=sensu --name sensu-rabbit -p 8088:15672 rabbitmq:3-management`
+Port `15672` is where the rabbitmq management dashboard is running on (`un: guest pw: guest`)
 
-Port `15672` is where the rabbitmq management dashboard is running on (`un: sensu pw: mypass`)
+Browse the RabbitMQ Management dashboard at `http://localhost:8080`
+
+Run the Redis Container https://registry.hub.docker.com/_/redis/
+`docker run --name sensu-redis -d redis`
+The Docker file exposes `6379`
+
+
 When you run container you can see which port the Sensu dashboard is listening on my running `docker ps` (`un: admin pw: secret`)
 
 ```

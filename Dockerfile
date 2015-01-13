@@ -1,7 +1,7 @@
 FROM ubuntu:trusty
 MAINTAINER John Dilts <john.dilts@enstratius.com>
 
-RUN apt-get update && apt-get install -y curl wget openssl
+RUN apt-get update && apt-get install -y wget openssl
 
 RUN useradd -d /home/sensu -m -s /bin/bash sensu
 RUN echo sensu:sensu | chpasswd
@@ -15,8 +15,6 @@ RUN /tmp/install-sensu.sh
 ADD config.json /etc/sensu/
 ADD client.json /etc/sensu/conf.d/client.json
 
-EXPOSE 15672:15672
-EXPOSE 8080
 EXPOSE 3000:3000
 ADD start.sh /tmp/start.sh
-CMD ["/tmp/start.sh"]
+ENTRYPOINT ["/tmp/start.sh"]
