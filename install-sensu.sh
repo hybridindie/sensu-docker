@@ -24,7 +24,7 @@ rabbitmqctl set_permissions -p /sensu sensu ".*" ".*" ".*"
 rabbitmq-plugins enable rabbitmq_management
 
 apt-get -y install redis-server
-/sbin/chkconfig redis on
+update-rc.d rabbitmq-server defaults
 /etc/init.d/redis start
 
 wget -q http://repos.sensuapp.org/apt/pubkey.gpg -O- | apt-key add -
