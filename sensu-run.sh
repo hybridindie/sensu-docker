@@ -108,11 +108,21 @@ else
           "refresh": 300,
           "subscribers": [ "sensu" ]
         },
-        "sensu-dashboard": {
+        "sensu-ctl": {
           "handlers": [
           "default"
           ],
-          "command": "/etc/sensu/plugins/processes/check-procs.rb -p sensu-dashboard -C 1 -w 1 -c 1",
+          "command": "/etc/sensu/plugins/processes/check-procs.rb -p sensu-ctl -C 1 -w 1 -c 1",
+          "interval": 60,
+          "occurrences": 2,
+          "refresh": 300,
+          "subscribers": [ "sensu" ]
+        },
+        "uchiwa": {
+          "handlers": [
+          "default"
+          ],
+          "command": "/etc/sensu/plugins/processes/check-procs.rb -p uchiwa -C 1 -w 1 -c 1",
           "interval": 60,
           "occurrences": 2,
           "refresh": 300,
