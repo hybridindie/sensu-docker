@@ -27,13 +27,6 @@ else
       "host": "$SENSU_HOST",
       "port": 4567
     },
-    "uchiwa": {
-      "host": "$SENSU_HOST",
-      "port": 3000,
-      "user": "$UCHIWA_USER",
-      "password": "$UCHIWA_PASS",
-      "refresh": 5
-    },
     "handlers": {
       "default": {
         "type": "pipe",
@@ -56,6 +49,23 @@ else
       "subscriptions": [ "default", "sensu" ]
     }
   }
+EOF
+  echo "Wrote out /etc/sensu/conf.d/client.json"
+fi
+
+if [ ! -z "$SENSU_UCHIWA_CONFIG_URL" ] ; then
+  wget --no-check-certificate -O /etc/sensu/uchiwa.json $SENSU_CLIENT_CONFIG_URL
+else
+  cat << EOF > /etc/sensu/uchiwa.json
+    {
+      "uchiwa": {
+        "host": "$SENSU_HOST",
+        "port": 3000,
+        "user": "$UCHIWA_USER",
+        "password": "$UCHIWA_PASS",
+        "refresh": 5
+      }
+    }
 EOF
   echo "Wrote out /etc/sensu/conf.d/client.json"
 fi
