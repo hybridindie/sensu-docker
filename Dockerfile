@@ -12,9 +12,20 @@ RUN /tmp/ssl_certs.sh generate
 
 ADD install-sensu.sh /tmp/
 RUN /tmp/install-sensu.sh
+
 ADD config.json /etc/sensu/
 ADD client.json /etc/sensu/conf.d/client.json
 
+ADD supervisor.conf /etc/supervisor/conf.d/sensu.conf
+ADD run.sh /tmp/sensu-run.sh
+
+VOLUME /etc/sensu
+VOLUME /var/log/sensu
+
+EXPOSE 4567
+EXPOSE 5672
+EXPOSE 6379
+EXPOSE 8080
 EXPOSE 3000
-ADD start.sh /tmp/start.sh
-CMD ["/tmp/start.sh"]
+
+CMD ["/tmp/sensu-run.sh"]
