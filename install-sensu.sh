@@ -14,6 +14,7 @@ mkdir -p /etc/rabbitmq/ssl
 cp /sensu_ca/cacert.pem /etc/rabbitmq/ssl
 cp /server/*.pem /etc/rabbitmq/ssl
 
+update-rc.d rabbitmq-server defaults
 /etc/init.d/rabbitmq-server restart
 
 rabbitmqctl add_vhost /sensu
@@ -23,6 +24,8 @@ rabbitmqctl set_permissions -p /sensu sensu ".*" ".*" ".*"
 rabbitmq-plugins enable rabbitmq_management
 
 apt-get -y install redis-server
+/sbin/chkconfig redis on
+/etc/init.d/redis start
 
 wget -q http://repos.sensuapp.org/apt/pubkey.gpg -O- | apt-key add -
 echo "deb     http://repos.sensuapp.org/apt sensu main" > /etc/apt/sources.list.d/sensu.list
