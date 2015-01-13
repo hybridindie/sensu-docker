@@ -16,7 +16,6 @@ RUN /tmp/install-sensu.sh
 ADD supervisor.conf /etc/supervisor/conf.d/sensu.conf
 ADD sensu-run.sh /tmp/sensu-run.sh
 
-VOLUME /etc/sensu
 VOLUME /var/log/sensu
 
 EXPOSE 4567
@@ -24,4 +23,4 @@ EXPOSE 5672
 EXPOSE 6379
 EXPOSE 3000
 
-CMD /tmp/sensu-run.sh
+CMD ["/tmp/sensu-run.sh"]

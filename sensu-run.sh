@@ -2,6 +2,7 @@
 UCHIWA_USER=${UCHIWA_USER:-admin}
 UCHIWA_PASS=${UCHIWA_PASS:-sensu}
 SENSU_HOST=${SENSU_HOST:-localhost}
+UCHIWA_CONFIG_URL=${UCHIWA_CONFIG_URL:-localhost}
 SKIP_CONFIG=${SKIP_CONFIG:-}
 SENSU_CONFIG_URL=${SENSU_CONFIG_URL:-}
 SENSU_CLIENT_CONFIG_URL=${SENSU_CLIENT_CONFIG_URL:-}
@@ -53,7 +54,7 @@ EOF
   echo "Wrote out /etc/sensu/conf.d/client.json"
 fi
 
-if [ ! -z "$SENSU_UCHIWA_CONFIG_URL" ] ; then
+if [ ! -z "$UCHIWA_CONFIG_URL" ] ; then
   wget --no-check-certificate -O /etc/sensu/uchiwa.json $SENSU_CLIENT_CONFIG_URL
 else
   cat << EOF > /etc/sensu/uchiwa.json
