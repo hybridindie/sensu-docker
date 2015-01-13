@@ -17,7 +17,7 @@ ADD config.json /etc/sensu/
 ADD client.json /etc/sensu/conf.d/client.json
 
 ADD supervisor.conf /etc/supervisor/conf.d/sensu.conf
-ADD run.sh /tmp/sensu-run.sh
+ADD sensu-run.sh /tmp/sensu-run.sh
 
 VOLUME /etc/sensu
 VOLUME /var/log/sensu
