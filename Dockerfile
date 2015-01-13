@@ -22,7 +22,6 @@ VOLUME /var/log/sensu
 EXPOSE 4567
 EXPOSE 5672
 EXPOSE 6379
-EXPOSE 8080
 EXPOSE 3000
 
 CMD ["/tmp/sensu-run.sh"]

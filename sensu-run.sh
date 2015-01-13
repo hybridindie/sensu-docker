@@ -1,6 +1,6 @@
 #!/bin/sh
-DASHBOARD_USER=${DASHBOARD_USER:-admin}
-DASHBOARD_PASS=${DASHBOARD_PASS:-sensu}
+UCHIWA_USER=${UCHIWA_USER:-admin}
+UCHIWA_PASS=${UCHIWA_PASS:-sensu}
 SENSU_HOST=${SENSU_HOST:-localhost}
 SKIP_CONFIG=${SKIP_CONFIG:-}
 SENSU_CONFIG_URL=${SENSU_CONFIG_URL:-}
@@ -28,11 +28,11 @@ else
         "host": "$SENSU_HOST",
         "port": 4567
       },
-      "dashboard": {
+      "uchiwa": {
         "host": "$SENSU_HOST",
-        "port": 8080,
-        "user": "$DASHBOARD_USER",
-        "password": "$DASHBOARD_PASS"
+        "port": 3000,
+        "user": "$UCHIWA_USER",
+        "password": "$UCHIWA_PASS"
       },
       "handlers": {
         "default": {
