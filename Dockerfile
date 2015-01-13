@@ -13,9 +13,6 @@ RUN /tmp/ssl_certs.sh generate
 ADD install-sensu.sh /tmp/
 RUN /tmp/install-sensu.sh
 
-ADD config.json /etc/sensu/
-ADD client.json /etc/sensu/conf.d/client.json
-
 ADD supervisor.conf /etc/supervisor/conf.d/sensu.conf
 ADD sensu-run.sh /tmp/sensu-run.sh
 

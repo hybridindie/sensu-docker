@@ -41,8 +41,7 @@ else
         }
       }
     }
-
-    EOF
+EOF
   fi
 fi
 
@@ -58,7 +57,7 @@ else
         "subscriptions": [ "default", "sensu" ]
       }
     }
-    EOF
+EOF
   fi
 fi
 
@@ -121,7 +120,7 @@ else
         }
       }
     }
-    EOF
+EOF
   fi
 fi
 
