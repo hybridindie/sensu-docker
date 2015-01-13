@@ -2,8 +2,7 @@
 wget -q http://repos.sensuapp.org/apt/pubkey.gpg -O- | apt-key add -
 echo "deb http://repos.sensuapp.org/apt sensu main" > /etc/apt/sources.list.d/sensu.list
 
-apt-get update
-apt-get install rabbitmq-server redis-server supervisor sensu uchiwa
+apt-get update && apt-get install git-core rabbitmq-server redis-server supervisor sensu uchiwa
 echo "sensu hold" | dpkg --set-selections
 
 echo "EMBEDDED_RUBY=true" > /etc/default/sensu & ln -s /opt/sensu/embedded/bin/ruby /usr/bin/ruby
