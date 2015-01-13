@@ -31,7 +31,8 @@ else
       "host": "$SENSU_HOST",
       "port": 3000,
       "user": "$UCHIWA_USER",
-      "password": "$UCHIWA_PASS"
+      "password": "$UCHIWA_PASS",
+      "refresh": 5
     },
     "handlers": {
       "default": {
@@ -41,6 +42,7 @@ else
     }
   }
 EOF
+  echo "Wrote out /etc/sensu/config.json"
 fi
 
 if [ ! -z "$SENSU_CLIENT_CONFIG_URL" ] ; then
@@ -55,6 +57,7 @@ else
     }
   }
 EOF
+  echo "Wrote out /etc/sensu/conf.d/client.json"
 fi
 
 if [ ! -z "$SENSU_CHECKS_CONFIG_URL" ] ; then
@@ -126,6 +129,7 @@ else
     }
   }
 EOF
+  echo "Wrote out /etc/sensu/conf.d/checks.json"
 fi
 
 /usr/bin/supervisord
