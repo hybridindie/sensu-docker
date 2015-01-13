@@ -15,6 +15,6 @@ RUN /tmp/install-sensu.sh
 ADD config.json /etc/sensu/
 ADD client.json /etc/sensu/conf.d/client.json
 
-EXPOSE 3000:3000
+EXPOSE 3000
 ADD start.sh /tmp/start.sh
-ENTRYPOINT ["/tmp/start.sh"]
+CMD ["/tmp/start.sh"]
