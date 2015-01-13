@@ -1,7 +1,6 @@
 FROM ubuntu:trusty
 MAINTAINER John Dilts <john.dilts@enstratius.com>
 
-RUN echo "deb http://archive.ubuntu.com/ubuntu trusty universe" >> /etc/apt/sources.list
 RUN apt-get update && apt-get install -y curl wget openssl
 
 RUN useradd -d /home/sensu -m -s /bin/bash sensu
