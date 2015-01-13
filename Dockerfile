@@ -24,4 +24,4 @@ EXPOSE 5672
 EXPOSE 6379
 EXPOSE 3000
 
-CMD ["/tmp/sensu-run.sh"]
+CMD /tmp/sensu-run.sh
