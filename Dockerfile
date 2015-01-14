@@ -1,7 +1,7 @@
-FROM debian:latest
+FROM debian:jess
 MAINTAINER John Dilts <john.dilts@enstratius.com>
 
-RUN apt-get update && apt-get install -y wget openssl
+RUN apt-get update && apt-get upgrade -y && apt-get install -y wget openssl
 
 RUN useradd -d /home/sensu -m -s /bin/bash sensu
 RUN echo sensu:sensu | chpasswd
