@@ -57,8 +57,7 @@ fi
 if [ ! -z "$UCHIWA_CONFIG_URL" ] ; then
   wget --no-check-certificate -O /etc/sensu/uchiwa.json $SENSU_CLIENT_CONFIG_URL
 else
-  rm /etc/sensu/uchiwa.json
-  cat << EOF > /etc/sensu/uchiwa.json
+  cat << EOF > /etc/sensu/sensu-uchiwa.json
     {
       "sensu": [
         {
