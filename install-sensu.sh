@@ -5,6 +5,9 @@ echo "deb http://repos.sensuapp.org/apt sensu main" > /etc/apt/sources.list.d/se
 apt-get update && apt-get install -y git-core rabbitmq-server redis-server supervisor sensu uchiwa
 echo "sensu hold" | dpkg --set-selections
 
+rabbitmq-plugins enable rabbitmq_management
+chown -R rabbitmq:rabbitmq /etc/rabbitmq/
+
 echo "EMBEDDED_RUBY=true" > /etc/default/sensu & ln -s /opt/sensu/embedded/bin/ruby /usr/bin/ruby
 /opt/sensu/embedded/bin/gem install redphone --no-rdoc --no-ri
 /opt/sensu/embedded/bin/gem install mail --no-rdoc --no-ri --version 2.5.4
