@@ -32,18 +32,7 @@ else
         "type": "pipe",
         "command": "true"
       }
-    }
-  }
-EOF
-  echo "Wrote out /etc/sensu/config.json"
-fi
-
-if [ ! -z "$SENSU_CLIENT_CONFIG_URL" ] ; then
-  wget --no-check-certificate -O /etc/sensu/conf.d/client.json $SENSU_CLIENT_CONFIG_URL
-else
-  mkdir -p /etc/sensu/conf.d
-  cat << EOF > /etc/sensu/conf.d/client.json
-  {
+    },
     "client": {
       "name": "sensu-server",
       "address": "127.0.0.1",
@@ -51,7 +40,7 @@ else
     }
   }
 EOF
-  echo "Wrote out /etc/sensu/conf.d/client.json"
+  echo "Wrote out /etc/sensu/config.json"
 fi
 
 if [ ! -z "$UCHIWA_CONFIG_URL" ] ; then
