@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM ubuntu:trusty
 MAINTAINER John Dilts <john.dilts@enstratius.com>
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y wget openssl
