@@ -72,7 +72,7 @@ else
         }
       ],
       "uchiwa": {
-        "host": "$SENSU_HOST",
+        "host": "0.0.0.0",
         "port": 3000,
         "user": "$UCHIWA_USER",
         "password": "$UCHIWA_PASS",
@@ -80,7 +80,7 @@ else
       }
     }
 EOF
-  echo "Wrote out /etc/sensu/conf.d/client.json"
+  echo "Wrote out /etc/sensu/uchiwa.json"
 fi
 
 if [ ! -z "$SENSU_CHECKS_CONFIG_URL" ] ; then
