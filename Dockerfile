@@ -1,4 +1,4 @@
-FROM ubuntu:trusty
+FROM ubuntu:latest
 MAINTAINER John Dilts <john.dilts@enstratius.com>
 
 RUN apt-get update && apt-get install -y wget openssl
@@ -17,6 +17,7 @@ ADD supervisor.conf /etc/supervisor/conf.d/sensu.conf
 ADD sensu-run.sh /tmp/sensu-run.sh
 
 VOLUME /var/log/sensu
+VOLUME /etc/sensu
 
 EXPOSE 4567
 EXPOSE 5672
