@@ -24,4 +24,5 @@ EXPOSE 5672
 EXPOSE 6379
 EXPOSE 3000
 
+CMD ["mkdir", "-p", "/etc/sensu/conf.d"]
 CMD ["/tmp/sensu-run.sh"]

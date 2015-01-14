@@ -8,8 +8,6 @@ SENSU_CONFIG_URL=${SENSU_CONFIG_URL:-}
 SENSU_CLIENT_CONFIG_URL=${SENSU_CLIENT_CONFIG_URL:-}
 SENSU_CHECKS_CONFIG_URL=${SENSU_CHECKS_CONFIG_URL:-}
 
-mkdir -p /etc/sensu/conf.d
-
 if [ ! -z "$SENSU_CONFIG_URL" ] ; then
   wget --no-check-certificate -O /etc/sensu/config.json $SENSU_CONFIG_URL
 else
@@ -44,6 +42,7 @@ fi
 if [ ! -z "$SENSU_CLIENT_CONFIG_URL" ] ; then
   wget --no-check-certificate -O /etc/sensu/conf.d/client.json $SENSU_CLIENT_CONFIG_URL
 else
+  mkdir -p /etc/sensu/conf.d
   cat << EOF > /etc/sensu/conf.d/client.json
   {
     "client": {
@@ -88,6 +87,7 @@ fi
 if [ ! -z "$SENSU_CHECKS_CONFIG_URL" ] ; then
   wget --no-check-certificate -O /etc/sensu/conf.d/checks.json $SENSU_CHECKS_CONFIG_URL
 else
+  mkdir -p /etc/sensu/conf.d
   cat << EOF > /etc/sensu/conf.d/checks.json
   {
     "checks": {
