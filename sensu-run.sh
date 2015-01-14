@@ -57,8 +57,21 @@ fi
 if [ ! -z "$UCHIWA_CONFIG_URL" ] ; then
   wget --no-check-certificate -O /etc/sensu/uchiwa.json $SENSU_CLIENT_CONFIG_URL
 else
+  rm /etc/sensu/uchiwa.json
   cat << EOF > /etc/sensu/uchiwa.json
     {
+      "sensu": [
+        {
+          "name": "Sensu",
+          "host": "$SENSU_HOST",
+          "ssl": false,
+          "port": 4567,
+          "user": "",
+          "pass": "",
+          "path": "",
+          "timeout": 5000
+        }
+      ],
       "uchiwa": {
         "host": "$SENSU_HOST",
         "port": 3000,
