@@ -20,7 +20,7 @@ VOLUME /var/log/sensu
 VOLUME /etc/sensu/conf.d
 
 EXPOSE 4567
-EXPOSE 5672
+EXPOSE 5671
 EXPOSE 6379
 
 CMD ["mkdir", "-p", "/etc/sensu/conf.d"]
