@@ -6,7 +6,6 @@ UCHIWA_CONFIG_URL=${UCHIWA_CONFIG_URL:-}
 SKIP_CONFIG=${SKIP_CONFIG:-}
 SENSU_CONFIG_URL=${SENSU_CONFIG_URL:-}
 SENSU_CLIENT_CONFIG_URL=${SENSU_CLIENT_CONFIG_URL:-}
-SENSU_CHECKS_CONFIG_URL=${SENSU_CHECKS_CONFIG_URL:-}
 
 if [ ! -z "$SENSU_CONFIG_URL" ] ; then
   wget --no-check-certificate -O /etc/sensu/config.json $SENSU_CONFIG_URL
@@ -82,69 +81,6 @@ else
     }
 EOF
   echo "Wrote out /etc/sensu/uchiwa.json"
-fi
-
-if [ ! -z "$SENSU_CHECKS_CONFIG_URL" ] ; then
-  wget --no-check-certificate -O /etc/sensu/conf.d/checks.json $SENSU_CHECKS_CONFIG_URL
-else
-  mkdir -p /etc/sensu/conf.d
-  cat << EOF > /etc/sensu/conf.d/checks.json
-  {
-    "checks": {
-      "sensu-rabbitmq-beam": {
-        "handlers": [
-        "default"
-        ],
-        "command": "/etc/sensu/plugins/processes/check-procs.rb -p beam -C 1 -w 4 -c 5",
-        "interval": 60,
-        "occurrences": 2,
-        "refresh": 300,
-        "subscribers": [ "sensu" ]
-      },
-      "sensu-rabbitmq-epmd": {
-        "handlers": [
-        "default"
-        ],
-        "command": "/etc/sensu/plugins/processes/check-procs.rb -p epmd -C 1 -w 1 -c 1",
-        "interval": 60,
-        "occurrences": 2,
-        "refresh": 300,
-        "subscribers": [ "sensu" ]
-      },
-      "sensu-redis": {
-        "handlers": [
-        "default"
-        ],
-        "command": "/etc/sensu/plugins/processes/check-procs.rb -p redis-server -C 1 -w 4 -c 5",
-        "interval": 60,
-        "occurrences": 2,
-        "refresh": 300,
-        "subscribers": [ "sensu" ]
-      },
-      "sensu-api": {
-        "handlers": [
-        "default"
-        ],
-        "command": "/etc/sensu/plugins/processes/check-procs.rb -p sensu-api -C 1 -w 4 -c 5",
-        "interval": 60,
-        "occurrences": 2,
-        "refresh": 300,
-        "subscribers": [ "sensu" ]
-      },,
-      "uchiwa": {
-        "handlers": [
-        "default"
-        ],
-        "command": "/etc/sensu/plugins/processes/check-procs.rb -p uchiwa -C 1 -w 1 -c 1",
-        "interval": 60,
-        "occurrences": 2,
-        "refresh": 300,
-        "subscribers": [ "sensu" ]
-      }
-    }
-  }
-EOF
-  echo "Wrote out /etc/sensu/conf.d/checks.json"
 fi
 
 /usr/bin/supervisord
