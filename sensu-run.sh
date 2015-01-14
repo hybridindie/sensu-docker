@@ -15,9 +15,9 @@ else
     "rabbitmq": {
       "port": 5672,
       "host": "$SENSU_HOST",
-      "user": "guest",
-      "password": "guest",
-      "vhost": "/"
+      "user": "sensu",
+      "password": "sensu",
+      "vhost": "/sensu"
     },
     "redis": {
       "host": "$SENSU_HOST",

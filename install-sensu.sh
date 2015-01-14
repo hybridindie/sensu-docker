@@ -8,6 +8,10 @@ echo "sensu hold" | dpkg --set-selections
 rabbitmq-plugins enable rabbitmq_management
 chown -R rabbitmq:rabbitmq /etc/rabbitmq/
 
+rabbitmqctl add_vhost /sensu
+rabbitmqctl add_user sensu pass
+rabbitmqctl set_permissions -p /sensu sensu ".*" ".*" ".*"
+
 echo "EMBEDDED_RUBY=true" > /etc/default/sensu & ln -s /opt/sensu/embedded/bin/ruby /usr/bin/ruby
 /opt/sensu/embedded/bin/gem install redphone --no-rdoc --no-ri
 /opt/sensu/embedded/bin/gem install mail --no-rdoc --no-ri --version 2.5.4
