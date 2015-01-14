@@ -8,6 +8,8 @@ SENSU_CONFIG_URL=${SENSU_CONFIG_URL:-}
 SENSU_CLIENT_CONFIG_URL=${SENSU_CLIENT_CONFIG_URL:-}
 SENSU_CHECKS_CONFIG_URL=${SENSU_CHECKS_CONFIG_URL:-}
 
+mkdir -p /etc/sensu/conf.d
+
 if [ ! -z "$SENSU_CONFIG_URL" ] ; then
   wget --no-check-certificate -O /etc/sensu/config.json $SENSU_CONFIG_URL
 else
