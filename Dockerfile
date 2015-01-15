@@ -6,7 +6,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y wget openssl
 RUN useradd -d /home/sensu -m -s /bin/bash sensu
 RUN echo sensu:sensu | chpasswd
 
-ADD sensu_ca /tmp/sensu_ca
+COPY sensu_ca /tmp/sensu_ca
 RUN cd /tmp/sensu_ca && ssl_certs.sh generate
 
 ADD install-sensu.sh /tmp/
