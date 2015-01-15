@@ -7,8 +7,10 @@ RUN useradd -d /home/sensu -m -s /bin/bash sensu
 RUN echo sensu:sensu | chpasswd
 
 COPY sensu_ca /tmp/sensu_ca
-RUN cd /tmp/sensu_ca && ssl_certs.sh generate
+WORKDIR cd /tmp/sensu_ca
+RUN ssl_certs.sh generate
 
+WORKDIR /
 ADD install-sensu.sh /tmp/
 RUN /tmp/install-sensu.sh
 
