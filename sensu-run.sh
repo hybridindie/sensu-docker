@@ -13,7 +13,7 @@ else
   cat << EOF > /etc/sensu/config.json
   {
     "rabbitmq": {
-      "port": 5672,
+      "port": 5671,
       "host": "$SENSU_HOST",
       "user": "sensu",
       "password": "sensu",
