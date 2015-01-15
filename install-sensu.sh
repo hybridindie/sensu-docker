@@ -40,3 +40,6 @@ git clone https://github.com/sensu/sensu-community-plugins.git /tmp/sensu_plugin
 
 cp -Rpf /tmp/sensu_plugins/plugins /etc/sensu/
 find /etc/sensu/plugins/ -name *.rb -exec chmod +x {} \;
+
+mkdir -p /etc/sensu/ssl
+cp /tmp/ssl_certs/sensu_ca/client/cert.pem /tmp/ssl_certs/sensu_ca/client/key.pem /etc/sensu/ssl

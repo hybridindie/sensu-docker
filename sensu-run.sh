@@ -13,10 +13,14 @@ else
   cat << EOF > /etc/sensu/config.json
   {
     "rabbitmq": {
+      "ssl": {
+        "cert_chain_file": "/etc/sensu/ssl/cert.pem",
+        "private_key_file": "/etc/sensu/ssl/key.pem"
+      },
       "port": 5671,
       "host": "$SENSU_HOST",
       "user": "sensu",
-      "password": "sensu",
+      "password": "pass",
       "vhost": "/sensu"
     },
     "redis": {
