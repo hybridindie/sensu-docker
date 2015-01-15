@@ -10,7 +10,7 @@ echo "sensu hold" | dpkg --set-selections
 # service rabbitmq-server start
 
 mkdir -p /etc/rabbitmq/ssl
-cp /tmp/sensu_ca/cacert.pem /tmp/sensu_ca/server/cert.pem /tmp/sensu_ca/server/key.pem /etc/rabbitmq/ssl
+cp /tmp/ssl_certs/sensu_ca/cacert.pem /tmp/ssl_certs/sensu_ca/server/cert.pem /tmp/ssl_certs/sensu_ca/server/key.pem /etc/rabbitmq/ssl
 
 cat << EOF > /etc/rabbitmq/rabbitmq.config
 [
