@@ -5,9 +5,9 @@ echo "deb http://repos.sensuapp.org/apt sensu main" > /etc/apt/sources.list.d/se
 apt-get update && apt-get install -y git-core rabbitmq-server redis-server supervisor sensu uchiwa
 echo "sensu hold" | dpkg --set-selections
 
-# rabbitmq-plugins enable rabbitmq_management
-# chown -R rabbitmq:rabbitmq /etc/rabbitmq/
-# service rabbitmq-server start
+rabbitmq-plugins enable rabbitmq_management
+chown -R rabbitmq:rabbitmq /etc/rabbitmq/
+service rabbitmq-server start
 
 mkdir -p /etc/rabbitmq/ssl
 cp /tmp/ssl_certs/sensu_ca/cacert.pem /tmp/ssl_certs/sensu_ca/server/cert.pem /tmp/ssl_certs/sensu_ca/server/key.pem /etc/rabbitmq/ssl
@@ -25,7 +25,7 @@ cat << EOF > /etc/rabbitmq/rabbitmq.config
 ].
 EOF
 
-service rabbitmq-server start
+service rabbitmq-server restart
 
 rabbitmqctl add_vhost /sensu
 rabbitmqctl add_user sensu pass
