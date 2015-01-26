@@ -13,6 +13,12 @@ RUN /tmp/install-sensu.sh
 ADD supervisor.conf /etc/supervisor/conf.d/sensu.conf
 ADD sensu-run.sh /tmp/sensu-run.sh
 
+RUN service rabbitmq-server start
+
+CMD ["rabbitmqctl", "add_vhost", "/sensu"]
+CMD ["rabbitmqctl", "add_user", "sensu", "pass"]
+CMD ["rabbitmqctl", "set_permissions", "-p", "/sensu", "sensu", "\".*\"", "\".*\"", "\".*\""]
+
 VOLUME /var/log/sensu
 VOLUME /etc/sensu/conf.d
 

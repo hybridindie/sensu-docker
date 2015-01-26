@@ -7,7 +7,6 @@ echo "sensu hold" | dpkg --set-selections
 
 rabbitmq-plugins enable rabbitmq_management
 chown -R rabbitmq:rabbitmq /etc/rabbitmq/
-service rabbitmq-server start
 
 mkdir -p /etc/rabbitmq/ssl
 cp /tmp/ssl_certs/sensu_ca/cacert.pem /tmp/ssl_certs/sensu_ca/server/cert.pem /tmp/ssl_certs/sensu_ca/server/key.pem /etc/rabbitmq/ssl
@@ -25,12 +24,6 @@ cat << EOF > /etc/rabbitmq/rabbitmq.config
 ].
 EOF
 
-service rabbitmq-server restart
-
-rabbitmqctl add_vhost /sensu
-rabbitmqctl add_user sensu pass
-rabbitmqctl set_permissions -p /sensu sensu ".*" ".*" ".*"
-
 echo "EMBEDDED_RUBY=true" > /etc/default/sensu & ln -s /opt/sensu/embedded/bin/ruby /usr/bin/ruby
 /opt/sensu/embedded/bin/gem install redphone --no-rdoc --no-ri
 /opt/sensu/embedded/bin/gem install mail --no-rdoc --no-ri --version 2.5.4
@@ -40,6 +33,9 @@ git clone https://github.com/sensu/sensu-community-plugins.git /tmp/sensu_plugin
 
 cp -Rpf /tmp/sensu_plugins/plugins /etc/sensu/
 find /etc/sensu/plugins/ -name *.rb -exec chmod +x {} \;
+
+git clone git://github.com/opower/sensu-metrics-relay.git /tmp/sensu-metrics-relay
+cp -Rpf /tmp/sensu-metrics-relay/lib/sensu/extensions/* /etc/sensu/extensions
 
 mkdir -p /etc/sensu/ssl
 cp /tmp/ssl_certs/sensu_ca/client/cert.pem /tmp/ssl_certs/sensu_ca/client/key.pem /etc/sensu/ssl
