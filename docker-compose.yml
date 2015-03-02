@@ -1,0 +1,10 @@
+redis:
+  image: redis
+rabbitmq:
+  # image: rabbitmq
+  build: ./RabbitMQ
+sensu:
+  build: .
+  links:
+    - redis
+    - rabbitmq
