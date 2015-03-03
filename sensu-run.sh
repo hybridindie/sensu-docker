@@ -18,13 +18,13 @@ else
         "private_key_file": "/etc/sensu/ssl/key.pem"
       },
       "port": 5671,
-      "host": "$SENSU_HOST",
+      "host": "$RABBITMQ_1_PORT_5671_TCP_ADDR",
       "user": "sensu",
       "password": "pass",
       "vhost": "/sensu"
     },
     "redis": {
-      "host": "$SENSU_HOST",
+      "host": "$REDIS_PORT_6379_TCP_ADDR",
       "port": 6379
     },
     "api": {

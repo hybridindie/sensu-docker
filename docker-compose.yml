@@ -1,10 +1,18 @@
 redis:
   image: redis
+  expose:
+    - "6379"
 rabbitmq:
-  # image: rabbitmq
   build: ./RabbitMQ
+  expose:
+    - "5671"
 sensu:
   build: .
+  volumes:
+    - /var/log/sensu:/var/log/sensu
+    - /etc/sensu/conf.d:/etc/sensu/conf.d
   links:
     - redis
     - rabbitmq
+  ports:
+    - "3000:3000"
