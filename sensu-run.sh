@@ -76,4 +76,58 @@ EOF
   echo "Wrote out /etc/sensu/uchiwa.json"
 fi
 
+cat << EOF > /etc/sensu/conf.d/sensu-client.json
+  {
+     "checks": {
+        "sensu-client": {
+          "handlers": [
+          "default"
+          ],
+          "command": "/etc/sensu/plugins/processes/check-procs.rb -p sensu-client -C 1 -w 4 -c 5",
+          "interval": 60,
+          "occurrences": 2,
+          "refresh": 300,
+          "subscribers": [ "default" ]
+        }
+     }
+  }
+EOF
+
+cat << EOF > /etc/sensu/conf.d/sensu-server.json
+  {
+    "checks": {
+      "sensu-server": {
+        "handlers": [
+          "default"
+        ],
+        "command": "/etc/sensu/plugins/processes/check-procs.rb -p sensu-server -C 1 -w 4 -c 5",
+        "interval": 60,
+        "occurrences": 2,
+        "refresh": 300,
+        "subscribers": [ "sensu" ]
+      },
+      "sensu-api": {
+        "handlers": [
+          "default"
+        ],
+        "command": "/etc/sensu/plugins/processes/check-procs.rb -p sensu-api -C 1 -w 4 -c 5",
+        "interval": 60,
+        "occurrences": 2,
+        "refresh": 300,
+        "subscribers": [ "sensu" ]
+      },
+      "uchiwa": {
+        "handlers": [
+          "default"
+        ],
+        "command": "/etc/sensu/plugins/processes/check-procs.rb -p uchiwa -C 1 -w 1 -c 1",
+        "interval": 60,
+        "occurrences": 2,
+        "refresh": 300,
+        "subscribers": [ "sensu" ]
+      }
+    }
+  }
+EOF
+
 /usr/bin/supervisord
