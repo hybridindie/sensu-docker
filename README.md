@@ -1,21 +1,33 @@
 Sensu
 ============
 
-Dockerfile to Create a Sensu Server
+Dockerfiles for each component and Docker Compose file for setting up a Sensu server.
 
-In some cases it's faster to build the docker container locally rather than pulling from the index.
-`sudo docker build github.com/jbrien/sensu-docker`
+Installing Docker
+-----------------
+Follow the instructions on the docker site for your platform.
+* [CentOS](https://docs.docker.com/installation/centos/)
+* [Ubuntu Trusty](https://docs.docker.com/installation/ubuntulinux/#docker-maintained-package-installation)
+* [Ubuntu Precise](https://docs.docker.com/installation/ubuntulinux/#ubuntu-precise-1204-lts-64-bit)
 
-Run the RabbitMQ Container https://registry.hub.docker.com/_/rabbitmq/
-`docker run -d -e RABBITMQ_NODENAME=sensu --name sensu-rabbit -p 8088:15672 rabbitmq:3-management`
-Port `15672` is where the rabbitmq management dashboard is running on (`un: guest pw: guest`)
+_I recommend using the Docker maintained repos for Ubuntu and do/will not support boot2docker on OSX_
 
-Browse the RabbitMQ Management dashboard at `http://localhost:8080`
+Installing Docker Compose
+-------------------------
 
-Run the Redis Container https://registry.hub.docker.com/_/redis/
-`docker run --name sensu-redis -d redis`
-The Docker file exposes `6379`
+```bash
+curl -L https://github.com/docker/compose/releases/download/1.1.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+```
 
-Run the Sensu server
-`docker run --name sensu-server -p 3000:3000 --link sensu-rabbit --link sensu-redis -d johnd/sensu`
-When you run container you can see which port the Sensu dashboard is listening on my running `docker ps` (`un: admin pw: secret`)
+Clone and Run the Sensu Server
+------------------------------
+
+Clone the repo ```git clone https://github.com/jbrien/sensu-docker.git```
+
+cd to the clone folder and run `sudo docker-compose build` this will pull and build the containers locally. _it's normal to see a rc or console errors and they can safely be ignored_ once the download and build process is done you can run `sudo docker-compose up` to start the cluster. Once up browse to http://[your-server-ip]:3000/ to see the sensu dashboard.
+
+This setup also monitors itself so you should be able to see three docker containers in the client list (the Docker container HOSTNAME is reflected in the IP Address column). Each Redis, RabbitMQ, and Sensu's components being monitored respectively. It's up to you at this point to secure the dashboard if you are going to use this in production.
+
+Connecting a new Client
+-----------------------
