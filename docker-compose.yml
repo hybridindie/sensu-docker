@@ -1,13 +1,15 @@
-redis:
-  image: redis
-  expose:
-    - "6379"
 rabbitmq:
   build: ./RabbitMQ
   expose:
     - "5671"
+redis:
+  build: ./Redis
+  links:
+    - rabbitmq
+  expose:
+    - "6379"
 sensu:
-  build: .
+  build: ./Sensu
   volumes:
     - /var/log/sensu:/var/log/sensu
     - /etc/sensu/conf.d:/etc/sensu/conf.d

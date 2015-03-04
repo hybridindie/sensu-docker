@@ -1,0 +1,22 @@
+cat << EOF > /etc/sensu/config.json
+{
+  "rabbitmq": {
+    "ssl": {
+      "cert_chain_file": "/etc/sensu/ssl/cert.pem",
+      "private_key_file": "/etc/sensu/ssl/key.pem"
+    },
+    "port": 5671,
+    "host": "$RABBITMQ_PORT_5671_TCP_ADDR",
+    "user": "sensu",
+    "password": "pass",
+    "vhost": "/sensu"
+  },
+  "client": {
+    "name": "sensu-redis",
+    "address": "$HOSTNAME",
+    "subscriptions": [ "default", "sensu-redis" ]
+  }
+}
+EOF
+
+/usr/bin/supervisord

@@ -39,7 +39,7 @@ else
     },
     "client": {
       "name": "sensu-server",
-      "address": "127.0.0.1",
+      "address": "$HOSTNAME",
       "subscriptions": [ "default", "sensu" ]
     }
   }
@@ -125,9 +125,39 @@ cat << EOF > /etc/sensu/conf.d/sensu-server.json
         "occurrences": 2,
         "refresh": 300,
         "subscribers": [ "sensu" ]
+      },
+      "sensu-redis": {
+        "handlers": [
+        "default"
+        ],
+        "command": "/etc/sensu/plugins/processes/check-procs.rb -p redis-server -C 1 -w 4 -c 5",
+        "interval": 60,
+        "occurrences": 2,
+        "refresh": 300,
+        "subscribers": [ "sensu-redis" ]
+      },
+      "sensu-rabbitmq-beam": {
+        "handlers": [
+        "default"
+        ],
+        "command": "/etc/sensu/plugins/processes/check-procs.rb -p beam -C 1 -w 4 -c 5",
+        "interval": 60,
+        "occurrences": 2,
+        "refresh": 300,
+        "subscribers": [ "sensu-rabbitmq" ]
+      },
+      "sensu-rabbitmq-epmd": {
+        "handlers": [
+        "default"
+        ],
+        "command": "/etc/sensu/plugins/processes/check-procs.rb -p epmd -C 1 -w 1 -c 1",
+        "interval": 60,
+        "occurrences": 2,
+        "refresh": 300,
+        "subscribers": [ "sensu-rabbitmq" ]
       }
     }
   }
 EOF
 
-/usr/bin/supervisord
+/usr/bin/supervisord -c /etc/supervisor/conf.d/sensu.conf
