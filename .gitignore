@@ -1,1 +1,3 @@
 .vagrant/*
+**/certs
+ssl/
