@@ -4,8 +4,23 @@ UCHIWA_PASS=${UCHIWA_PASS:-sensu}
 SENSU_HOST=${SENSU_HOST:-localhost}
 UCHIWA_CONFIG_URL=${UCHIWA_CONFIG_URL:-}
 SKIP_CONFIG=${SKIP_CONFIG:-}
+SENSU_METRICS=${SENSU_METRICS:-}
 SENSU_CONFIG_URL=${SENSU_CONFIG_URL:-}
 SENSU_CLIENT_CONFIG_URL=${SENSU_CLIENT_CONFIG_URL:-}
+
+if [ ! -z "$SENSU_METRICS" ] ; then
+  cat << EOF > /etc/sensu/conf.d/config_relay.json
+  {
+    "relay": {
+      "graphite": {
+        "host": "$GRAPHITE_PORT_2003_TCP_ADDR",
+        "port": "$GRAPHITE_PORT_2003_TCP_PORT"
+      }
+    }
+  }
+EOF
+  echo "Wrote out /etc/sensu/conf.d/config_relay.json"
+fi
 
 if [ ! -z "$SENSU_CONFIG_URL" ] ; then
   wget --no-check-certificate -O /etc/sensu/config.json $SENSU_CONFIG_URL
@@ -18,7 +33,7 @@ else
         "private_key_file": "/etc/sensu/ssl/key.pem"
       },
       "port": 5671,
-      "host": "$RABBITMQ_1_PORT_5671_TCP_ADDR",
+      "host": "$RABBITMQ_PORT_5671_TCP_ADDR",
       "user": "sensu",
       "password": "pass",
       "vhost": "/sensu"
@@ -155,6 +170,33 @@ cat << EOF > /etc/sensu/conf.d/sensu-server.json
         "occurrences": 2,
         "refresh": 300,
         "subscribers": [ "sensu-rabbitmq" ]
+      }
+    }
+  }
+EOF
+
+cat << EOF > /etc/sensu/conf.d/sensu-metrics.json
+  {
+    "checks": {
+      "sensu-metrics-graphite": {
+        "handlers": [
+          "default"
+        ],
+        "command": "/etc/sensu/plugins/processes/check-procs.rb -p carbon-cache -C 1 -w 4 -c 5",
+        "interval": 60,
+        "occurrences": 2,
+        "refresh": 300,
+        "subscribers": [ "sensu-metrics-graphite" ]
+      },
+      "sensu-metrics-elasticsearch": {
+        "handlers": [
+          "default"
+        ],
+        "command": "/etc/sensu/plugins/processes/check-procs.rb -p elasticsearch -C 1 -w 4 -c 5",
+        "interval": 60,
+        "occurrences": 2,
+        "refresh": 300,
+        "subscribers": [ "sensu-metrics-elasticsearch" ]
       }
     }
   }

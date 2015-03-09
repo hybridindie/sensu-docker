@@ -1,0 +1,35 @@
+rabbitmq:
+  build: ./RabbitMQ
+  expose:
+    - "5671"
+redis:
+  build: ./Redis
+  links:
+    - rabbitmq
+  expose:
+    - "6379"
+elasticsearch:
+  build: ./Elasticsearch
+  links:
+    - rabbitmq
+  expose:
+    - "9200"
+graphite:
+  build: ./Graphite
+  links:
+    - rabbitmq
+  expose:
+    - "2003"
+sensu:
+  build: ./Sensu
+  environment:
+    - SENSU_METRICS=true
+  volumes:
+    - /var/log/sensu:/var/log/sensu
+    - /etc/sensu/conf.d:/etc/sensu/conf.d
+  links:
+    - redis
+    - rabbitmq
+    - graphite
+  ports:
+    - "3000:3000"
