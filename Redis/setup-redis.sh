@@ -19,4 +19,4 @@ find /etc/sensu/plugins/ -name *.rb -exec chmod +x {} \;
 # cp -Rpf /tmp/sensu-metrics-relay/lib/sensu/extensions/* /etc/sensu/extensions
 
 mkdir -p /etc/sensu/ssl
-cp /tmp/ssl_certs/sensu_ca/client/cert.pem /tmp/ssl_certs/sensu_ca/client/key.pem /etc/sensu/ssl
+cp /tmp/ssl_certs/client/cert.pem /tmp/ssl_certs/client/key.pem /etc/sensu/ssl

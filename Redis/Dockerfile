@@ -3,7 +3,7 @@ MAINTAINER John Dilts <john.dilts@enstratius.com>
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y wget openssl redis-server supervisor
 
-ADD ssl_certs /tmp/ssl_certs
+ADD certs /tmp/ssl_certs
 ADD setup-redis.sh /tmp/
 
 RUN /tmp/setup-redis.sh
