@@ -15,8 +15,5 @@ git clone https://github.com/sensu/sensu-community-plugins.git /tmp/sensu_plugin
 cp -Rpf /tmp/sensu_plugins/plugins /etc/sensu/
 find /etc/sensu/plugins/ -name *.rb -exec chmod +x {} \;
 
-git clone git://github.com/opower/sensu-metrics-relay.git /tmp/sensu-metrics-relay
-cp -Rpf /tmp/sensu-metrics-relay/lib/sensu/extensions/* /etc/sensu/extensions
-
 mkdir -p /etc/sensu/ssl
 cp /tmp/ssl_certs/client/cert.pem /tmp/ssl_certs/client/key.pem /etc/sensu/ssl
