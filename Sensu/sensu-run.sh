@@ -8,20 +8,6 @@ SENSU_METRICS=${SENSU_METRICS:-}
 SENSU_CONFIG_URL=${SENSU_CONFIG_URL:-}
 SENSU_CLIENT_CONFIG_URL=${SENSU_CLIENT_CONFIG_URL:-}
 
-if [ ! -z "$SENSU_METRICS" ] ; then
-  cat << EOF > /etc/sensu/conf.d/config_relay.json
-  {
-    "relay": {
-      "graphite": {
-        "host": "$GRAPHITE_PORT_2003_TCP_ADDR",
-        "port": "$GRAPHITE_PORT_2003_TCP_PORT"
-      }
-    }
-  }
-EOF
-  echo "Wrote out /etc/sensu/conf.d/config_relay.json"
-fi
-
 if [ ! -z "$SENSU_CONFIG_URL" ] ; then
   wget --no-check-certificate -O /etc/sensu/config.json $SENSU_CONFIG_URL
 else
@@ -174,8 +160,20 @@ cat << EOF > /etc/sensu/conf.d/sensu-server.json
     }
   }
 EOF
+if [ ! -z "$SENSU_METRICS" ] ; then
+  cat << EOF > /etc/sensu/conf.d/config-relay.json
+  {
+    "relay": {
+      "graphite": {
+        "host": "$GRAPHITE_PORT_2003_TCP_ADDR",
+        "port": "$GRAPHITE_PORT_2003_TCP_PORT"
+      }
+    }
+  }
+EOF
+  echo "Wrote out /etc/sensu/conf.d/config-relay.json"
 
-cat << EOF > /etc/sensu/conf.d/sensu-metrics.json
+  cat << EOF > /etc/sensu/conf.d/sensu-metrics.json
   {
     "checks": {
       "sensu-metrics-graphite": {
@@ -201,5 +199,7 @@ cat << EOF > /etc/sensu/conf.d/sensu-metrics.json
     }
   }
 EOF
+  echo "Wrote out /etc/sensu/conf.d/sensu-metrics.json"
+fi
 
 /usr/bin/supervisord -c /etc/supervisor/conf.d/sensu.conf
