@@ -195,6 +195,16 @@ EOF
         "occurrences": 2,
         "refresh": 300,
         "subscribers": [ "sensu-metrics-elasticsearch" ]
+      },
+      "sensu-metrics-apache2": {
+        "handlers": [
+          "default"
+        ],
+        "command": "/etc/sensu/plugins/processes/check-procs.rb -p apache2 -C 1 -w 4 -c 5",
+        "interval": 60,
+        "occurrences": 2,
+        "refresh": 300,
+        "subscribers": [ "sensu-metrics-graphite", "sensu-metrics-grafana" ]
       }
     }
   }

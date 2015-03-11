@@ -14,7 +14,7 @@ EOF
 }
 
 clean() {
-    rm -rf ssl RabbitMQ/certs Redis/certs Graphite/certs Graphana/certs Elasticsearch/certs Sensu/certs
+    rm -rf ssl RabbitMQ/certs Redis/certs Graphite/certs Grafana/certs Elasticsearch/certs Sensu/certs
 }
 
 generate() {
@@ -49,7 +49,7 @@ setup_folders() {
   cp -R ssl/client Redis/certs
   cp -R ssl/client Sensu/certs
   cp -R ssl/client Graphite/certs
-  cp -R ssl/client Graphana/certs
+  cp -R ssl/client Grafana/certs
   cp -R ssl/client Elasticsearch/certs
 }
 

@@ -1,0 +1,21 @@
+FROM ubuntu:trusty
+MAINTAINER John Dilts <john.dilts@enstratius.com>
+
+RUN apt-get update && apt-get upgrade -y && apt-get install -y curl wget \
+                          git-core supervisor apache2 apache2-mpm-worker 
+
+RUN curl -O -L http://grafanarel.s3.amazonaws.com/grafana-1.9.1.tar.gz
+RUN tar xf grafana-1.9.1.tar.gz
+RUN cp -R grafana-1.9.1 /usr/share/grafana
+ADD grafana-config.js /usr/share/grafana/config.js
+
+ADD certs /tmp/ssl_certs
+ADD grafana-run.sh /tmp/
+
+RUN rm -f /etc/apache2/sites-enabled/000-default.conf
+ADD apache2-grafana.conf /etc/apache2/sites-enabled/grafana.conf
+
+ADD supervisor.conf /etc/supervisor/conf.d/supervisord.conf
+EXPOSE 80
+
+CMD ["/tmp/grafana-run.sh"]

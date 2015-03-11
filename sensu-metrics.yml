@@ -22,14 +22,14 @@ graphite:
     - "2003"
   ports:
     - "8080:80"
-# graphana:
-#   build: ./Graphana
-#   links:
-#     - rabbitmq
-#     - graphite
-#     - elasticsearch
-#   expose:
-#     - "8888:80"
+grafana:
+  build: ./Grafana
+  links:
+    - rabbitmq
+    - graphite
+    - elasticsearch
+  ports:
+    - "8888:80"
 sensu:
   build: ./Sensu
   environment:
