@@ -160,42 +160,42 @@ cat << EOF > /etc/sensu/conf.d/sensu-server.json
     }
   }
 EOF
+
+# Set by the sensu-metrics.yml
 if [ ! -z "$SENSU_METRICS" ] ; then
-  cat << EOF > /etc/sensu/conf.d/config-relay.json
+
+  echo "Downloading InfluxDB Handler"
+  git clone https://github.com/nohtyp/sensu-influxdb.git /tmp/sensu-influxdb
+  cp -Rpf /tmp/sensu-influxdb/etc/sensu/handlers/metrics/sensu-metrics.rb /etc/sensu/handlers/sensu-metrics.rb
+
+  cat << EOF > /etc/sensu/conf.d/influxdb-metrics.json
   {
-    "relay": {
-      "graphite": {
-        "host": "$GRAPHITE_PORT_2003_TCP_ADDR",
-        "port": "$GRAPHITE_PORT_2003_TCP_PORT"
+    "influxdb": {
+      "host": "$INFLUXDB_PORT_8086_TCP_ADDR",
+      "port": "$INFLUXDB_PORT_8086_TCP_PORT",
+      "username": "root",
+      "password": "root",
+      "database": "sensu"
+    }
+  }
+EOF
+  echo "Wrote out /etc/sensu/conf.d/influxdb-metrics.json"
+
+  cat << EOF > /etc/sensu/conf.d/influxdb-command.json
+  {
+    "handlers": {
+      "influxdb": {
+        "type": "pipe",
+        "command": "/etc/sensu/handlers/sensu-metrics.rb"
       }
     }
   }
 EOF
   echo "Wrote out /etc/sensu/conf.d/config-relay.json"
 
-  cat << EOF > /etc/sensu/conf.d/sensu-metrics.json
+  cat << EOF > /etc/sensu/conf.d/influxdb-command.json
   {
     "checks": {
-      "sensu-metrics-graphite": {
-        "handlers": [
-          "default"
-        ],
-        "command": "/etc/sensu/plugins/processes/check-procs.rb -p carbon-cache -C 1 -w 4 -c 5",
-        "interval": 60,
-        "occurrences": 2,
-        "refresh": 300,
-        "subscribers": [ "sensu-metrics-graphite" ]
-      },
-      "sensu-metrics-elasticsearch": {
-        "handlers": [
-          "default"
-        ],
-        "command": "/etc/sensu/plugins/processes/check-procs.rb -p elasticsearch -C 1 -w 4 -c 5",
-        "interval": 60,
-        "occurrences": 2,
-        "refresh": 300,
-        "subscribers": [ "sensu-metrics-elasticsearch" ]
-      },
       "sensu-metrics-apache2": {
         "handlers": [
           "default"
@@ -204,7 +204,21 @@ EOF
         "interval": 60,
         "occurrences": 2,
         "refresh": 300,
-        "subscribers": [ "sensu-metrics-graphite", "sensu-metrics-grafana" ]
+        "subscribers": [ "sensu-metrics-grafana" ]
+      },
+      "cpu_metrics": {
+        "type": "metric",
+        "handlers": [ "influxdb" ],
+        "command": "/etc/sensu/plugins/system/cpu-metrics.rb",
+        "interval": 30,
+        "subscribers": [ "default" ]
+      },
+      "load_metrics": {
+        "type": "metric",
+        "handlers": [ "influxdb" ],
+        "command": "/etc/sensu/plugins/system/load-metrics.rb",
+        "interval": 30,
+        "subscribers": [ "default" ]
       }
     }
   }

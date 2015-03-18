@@ -8,34 +8,26 @@ redis:
     - rabbitmq
   expose:
     - "6379"
-elasticsearch:
-  build: ./Elasticsearch
+influxdb:
+  build: ./Influxdb
   links:
     - rabbitmq
   expose:
-    - "9200"
+    - "8083"
+    - "8086"
+    - "8090"
+    - "8099"
   ports:
-    - "9200:9200"
-graphite:
-  build: ./Graphite
-  links:
-    - rabbitmq
-  expose:
-    - "2003"
-    - "80"
-  ports:
-    - "8880:80"
+    - "8086:8086"
+    - "8083:8083"
 grafana:
   build: ./Grafana
   environment:
-    - GRAPHITE_HOST=localhost
-    - GRAPHITE_PORT=8880
-    - ELASTICSEARCH_HOST=localhost
-    - ELASTICSEARCH_PORT=9200
+    - INFLUXDB_HOST=localhost
+    - INFLUXDB_PORT=8086
   links:
     - rabbitmq
-    - graphite
-    - elasticsearch
+    - influxdb
   ports:
     - "8888:80"
 sensu:
@@ -48,6 +40,6 @@ sensu:
   links:
     - redis
     - rabbitmq
-    - graphite
+    - influxdb
   ports:
     - "3000:3000"

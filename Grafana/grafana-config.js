@@ -9,14 +9,17 @@ define(['settings'], function(Settings) {
 
   // Graphite & Elasticsearch example setup
   datasources: {
-    graphite: {
-      type: 'graphite',
-      url: "http://%GRAPHITE_HOST%:%GRAPHITE_PORT%",
+    'sensu': {
+      type: 'influxdb',
+      url: "http://%INFLUXDB_HOST%:%INFLUXDB_PORT%/db/sensu",
+      username: 'root',
+      password: 'root'
     },
-    elasticsearch: {
-      type: 'elasticsearch',
-      url: "http://%ELASTICSEARCH_HOST%:%ELASTICSEARCH_PORT%",
-      index: 'grafana-dash',
+    'grafana': {
+      type: 'influxdb',
+      url: "http://%INFLUXDB_HOST%:%INFLUXDB_PORT%/db/grafana",
+      username: 'root',
+      password: 'root',
       grafanaDB: true
     }
   },

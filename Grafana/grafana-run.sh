@@ -39,10 +39,8 @@ cat << EOF > /etc/sensu/config.json
 }
 EOF
 
-sed -i -e "s/%GRAPHITE_HOST%/$GRAPHITE_HOST/g" \
-       -e "s/%GRAPHITE_PORT%/$GRAPHITE_PORT/g" \
-       -e "s/%ELASTICSEARCH_HOST%/$ELASTICSEARCH_HOST/g" \
-       -e "s/%ELASTICSEARCH_PORT%/$ELASTICSEARCH_PORT/g" \
+sed -i -e "s/%INFLUXDB_HOST%/$INFLUXDB_HOST/g" \
+       -e "s/%INFLUXDB_PORT%/$INFLUXDB_PORT/g" \
        /usr/share/grafana/config.js
 
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
