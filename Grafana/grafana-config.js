@@ -11,11 +11,11 @@ define(['settings'], function(Settings) {
   datasources: {
     graphite: {
       type: 'graphite',
-      url: "http://%GRAPHITE_PORT_80_ADDR%:80",
+      url: "http://%GRAPHITE_HOST%:%GRAPHITE_PORT%",
     },
     elasticsearch: {
       type: 'elasticsearch',
-      url: "http://%ELASTICSEARCH_PORT_9200_ADDR%:9200",
+      url: "http://%ELASTICSEARCH_HOST%:%ELASTICSEARCH_PORT%",
       index: 'grafana-dash',
       grafanaDB: true
     }

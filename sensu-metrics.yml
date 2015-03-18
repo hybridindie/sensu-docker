@@ -14,16 +14,24 @@ elasticsearch:
     - rabbitmq
   expose:
     - "9200"
+  ports:
+    - "9200:9200"
 graphite:
   build: ./Graphite
   links:
     - rabbitmq
   expose:
     - "2003"
+    - "80"
   ports:
-    - "8080:80"
+    - "8880:80"
 grafana:
   build: ./Grafana
+  environment:
+    - GRAPHITE_HOST=localhost
+    - GRAPHITE_PORT=8880
+    - ELASTICSEARCH_HOST=localhost
+    - ELASTICSEARCH_PORT=9200
   links:
     - rabbitmq
     - graphite

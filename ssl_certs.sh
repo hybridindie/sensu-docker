@@ -44,7 +44,7 @@ generate() {
 }
 
 setup_folders() {
-  mkdir -p RabbitMQ/certs Redis/certs Graphite/certs Graphana/certs Elasticsearch/certs Sensu/certs
+  mkdir -p RabbitMQ/certs Redis/certs Graphite/certs Grafana/certs Elasticsearch/certs Sensu/certs
   cp -R ssl/* RabbitMQ/certs
   cp -R ssl/client Redis/certs
   cp -R ssl/client Sensu/certs

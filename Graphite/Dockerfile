@@ -15,7 +15,9 @@ RUN rm -f /etc/apache2/sites-enabled/000-default.conf
 RUN cp /usr/share/graphite-web/apache2-graphite.conf /etc/apache2/sites-enabled/graphite.conf
 
 ADD supervisor.conf /etc/supervisor/conf.d/supervisord.conf
-EXPOSE 2003
 EXPOSE 80
+EXPOSE 2003
+EXPOSE 8080
+
 
 CMD ["/tmp/graphite-run.sh"]
