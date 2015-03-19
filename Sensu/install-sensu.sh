@@ -20,5 +20,7 @@ find /etc/sensu/plugins/ -name *.rb -exec chmod +x {} \;
 curl https://www.openssl.org/source/openssl-1.0.1h.tar.gz | tar xz && \
             cd openssl-1.0.1h && ./config && make && make install
 
+apt-get purge --auto-remove build-essential
+
 mkdir -p /etc/sensu/ssl
 cp /tmp/ssl_certs/client/cert.pem /tmp/ssl_certs/client/key.pem /etc/sensu/ssl
