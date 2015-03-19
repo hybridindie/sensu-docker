@@ -37,8 +37,8 @@ sensu:
   environment:
     - SENSU_METRICS=true
   volumes:
-    - /var/log/sensu-docker:/var/log/sensu
-    - /etc/sensu-docker/conf.d:/etc/sensu/conf.d
+    - /var/log/sensu:/var/log/sensu
+    - /etc/sensu/conf.d:/etc/sensu/conf.d
   links:
     - redis
     - rabbitmq
