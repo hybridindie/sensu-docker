@@ -1,7 +1,7 @@
 #!/bin/bash
 curl https://www.openssl.org/source/openssl-1.0.1h.tar.gz | tar xz && \
             cd openssl-1.0.1h && sudo ./config && sudo make && sudo make install
-            
+
 wget -q http://repos.sensuapp.org/apt/pubkey.gpg -O- | apt-key add -
 echo "deb http://repos.sensuapp.org/apt sensu main" > /etc/apt/sources.list.d/sensu.list
 

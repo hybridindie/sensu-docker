@@ -2,7 +2,7 @@ FROM ubuntu:trusty
 MAINTAINER John Dilts <john.dilts@enstratius.com>
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y curl wget \
-                          git-core supervisor apache2 apache2-mpm-worker 
+                          git-core supervisor apache2 apache2-mpm-worker
 
 RUN curl -O -L http://grafanarel.s3.amazonaws.com/grafana-1.9.1.tar.gz
 RUN tar xf grafana-1.9.1.tar.gz

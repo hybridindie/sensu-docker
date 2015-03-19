@@ -1,3 +1,6 @@
+mkdir -p /etc/sensu/ssl
+cp /tmp/ssl_certs/client/cert.pem /tmp/ssl_certs/client/key.pem /etc/sensu/ssl
+
 cat << EOF > /etc/sensu/config.json
 {
   "rabbitmq": {

@@ -1,7 +1,7 @@
 FROM library/rabbitmq
 MAINTAINER John Dilts <john.dilts@enstratius.com>
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y wget openssl supervisor
+RUN apt-get update && apt-get upgrade -y && apt-get install -y curl wget openssl supervisor
 
 ADD certs /tmp/ssl_certs
 ADD install-sensu.sh /tmp/
