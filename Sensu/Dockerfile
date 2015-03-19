@@ -13,8 +13,8 @@ RUN /tmp/install-sensu.sh
 ADD supervisor.conf /etc/supervisor/conf.d/sensu.conf
 ADD sensu-run.sh /tmp/sensu-run.sh
 
-VOLUME /var/log/sensu
-VOLUME /etc/sensu
+# VOLUME /var/log/sensu
+# VOLUME /etc/sensu-docker
 
 EXPOSE 4567
 EXPOSE 5671
