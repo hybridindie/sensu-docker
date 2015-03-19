@@ -2,6 +2,8 @@ rabbitmq:
   build: ./RabbitMQ
   expose:
     - "5671"
+  ports:
+    - "5671:5671"
 redis:
   build: ./Redis
   links:
