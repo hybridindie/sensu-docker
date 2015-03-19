@@ -10,6 +10,9 @@ RUN cp -R grafana-1.9.1 /usr/share/grafana
 ADD grafana-config.js /usr/share/grafana/config.js
 
 ADD certs /tmp/ssl_certs
+ADD install-sensu.sh /tmp/
+RUN /tmp/install-sensu.sh
+
 ADD grafana-run.sh /tmp/
 
 RUN rm -f /etc/apache2/sites-enabled/000-default.conf
