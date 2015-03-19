@@ -4,6 +4,9 @@ MAINTAINER John Dilts <john.dilts@enstratius.com>
 RUN apt-get update &&  apt-get install -y wget curl git-core supervisor
 
 ADD certs /tmp/ssl_certs
+ADD install-sensu.sh /tmp/
+RUN /tmp/install-sensu.sh
+
 ADD influxdb-setup.sh /tmp/influxdb-setup.sh
 RUN /tmp/influxdb-setup.sh
 
