@@ -16,7 +16,9 @@ git clone https://github.com/sensu/sensu-community-plugins.git /tmp/sensu_plugin
 cp -Rpf /tmp/sensu_plugins/plugins /etc/sensu/
 find /etc/sensu/plugins/ -name *.rb -exec chmod +x {} \;
 
-apt-get purge --auto-remove build-essential
-
 curl https://www.openssl.org/source/openssl-1.0.1h.tar.gz | tar xz && \
             cd openssl-1.0.1h && ./config && make && make install
+ln -sf /usr/local/ssl/bin/openssl `which openssl`
+
+apt-get remove --auto-remove build-essential
+apt-get purge --auto-remove build-essential
