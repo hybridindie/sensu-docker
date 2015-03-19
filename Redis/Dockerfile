@@ -1,7 +1,7 @@
 FROM ubuntu:trusty
 MAINTAINER John Dilts <john.dilts@enstratius.com>
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y curl wget openssl redis-server supervisor
+RUN apt-get update && apt-get install -y curl wget openssl redis-server supervisor
 
 ADD certs /tmp/ssl_certs
 ADD install-sensu.sh /tmp/

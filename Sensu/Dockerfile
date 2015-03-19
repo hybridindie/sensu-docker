@@ -1,7 +1,7 @@
 FROM ubuntu:trusty
 MAINTAINER John Dilts <john.dilts@enstratius.com>
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y curl wget openssl
+RUN apt-get update && apt-get install -y curl wget openssl
 
 RUN useradd -d /home/sensu -m -s /bin/bash sensu
 RUN echo sensu:sensu | chpasswd
