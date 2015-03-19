@@ -14,7 +14,7 @@ ADD supervisor.conf /etc/supervisor/conf.d/sensu.conf
 ADD sensu-run.sh /tmp/sensu-run.sh
 
 VOLUME /var/log/sensu
-VOLUME /etc/sensu/conf.d
+VOLUME /etc/sensu
 
 EXPOSE 4567
 EXPOSE 5671
