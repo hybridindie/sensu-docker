@@ -2,7 +2,7 @@
 wget -q http://repos.sensuapp.org/apt/pubkey.gpg -O- | apt-key add -
 echo "deb http://repos.sensuapp.org/apt sensu main" > /etc/apt/sources.list.d/sensu.list
 
-apt-get update && apt-get install -y build-essential git-core supervisor sensu uchiwa
+apt-get update && apt-get install -y git-core supervisor sensu uchiwa
 echo "sensu hold" | dpkg --set-selections
 
 echo "EMBEDDED_RUBY=true" > /etc/default/sensu & ln -s /opt/sensu/embedded/bin/ruby /usr/bin/ruby
@@ -17,13 +17,13 @@ git clone https://github.com/sensu/sensu-community-plugins.git /tmp/sensu_plugin
 cp -Rpf /tmp/sensu_plugins/plugins /etc/sensu/
 find /etc/sensu/plugins/ -name *.rb -exec chmod +x {} \;
 
-curl https://www.openssl.org/source/openssl-1.0.1h.tar.gz | tar xz && \
-            cd openssl-1.0.1h && ./config && make && make install
-ln -sf /usr/local/ssl/bin/openssl `which openssl`
-cd ../ && rm -rf openssl-1.0.1h
-
-apt-get remove -y --auto-remove build-essential
-apt-get purge -y --auto-remove build-essential
+# curl https://www.openssl.org/source/openssl-1.0.1h.tar.gz | tar xz && \
+#             cd openssl-1.0.1h && ./config && make && make install
+# ln -sf /usr/local/ssl/bin/openssl `which openssl`
+# cd ../ && rm -rf openssl-1.0.1h
+#
+# apt-get remove -y --auto-remove build-essential
+# apt-get purge -y --auto-remove build-essential
 
 mkdir -p /etc/sensu/ssl
 cp /tmp/ssl_certs/client/cert.pem /tmp/ssl_certs/client/key.pem /etc/sensu/ssl
