@@ -33,8 +33,8 @@ cat << EOF > /etc/sensu/config.json
     "vhost": "/sensu"
   },
   "client": {
-    "name": "sensu-metrics-grafana",
-    "address": "$HOSTNAME",
+    "name": "%NODE_NAME%",
+    "address": "%HOSTNAME%",
     "subscriptions": [ "default", "sensu-metrics-grafana" ]
   }
 }

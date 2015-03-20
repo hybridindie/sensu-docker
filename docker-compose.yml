@@ -2,6 +2,8 @@ rabbitmq:
   build: ./RabbitMQ
   expose:
     - "5671"
+  ports:
+    - "5671:5671"
 redis:
   build: ./Redis
   links:
@@ -10,6 +12,8 @@ redis:
     - "6379"
 sensu:
   build: ./Sensu
+  environment:
+    - SENSU_METRICS=false
   volumes:
     - /var/log/sensu:/var/log/sensu
     - /etc/sensu/conf.d:/etc/sensu/conf.d
