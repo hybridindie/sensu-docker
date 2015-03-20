@@ -6,6 +6,7 @@ apt-get update && apt-get install -y git-core sensu
 echo "sensu hold" | dpkg --set-selections
 
 echo "EMBEDDED_RUBY=true" > /etc/default/sensu & ln -s /opt/sensu/embedded/bin/ruby /usr/bin/ruby
+echo "LOG_LEVEL=info" > /etc/default/sensu
 /opt/sensu/embedded/bin/gem install redphone --no-rdoc --no-ri
 /opt/sensu/embedded/bin/gem install mail --no-rdoc --no-ri --version 2.5.4
 
@@ -14,3 +15,27 @@ git clone https://github.com/sensu/sensu-community-plugins.git /tmp/sensu_plugin
 
 cp -Rpf /tmp/sensu_plugins/plugins /etc/sensu/
 find /etc/sensu/plugins/ -name *.rb -exec chmod +x {} \;
+
+mkdir -p /etc/sensu/ssl
+cp /ssl_certs/client/cert.pem /tmp/ssl_certs/client/key.pem /etc/sensu/ssl
+
+cat << EOF > /etc/sensu/config.json
+{
+  "rabbitmq": {
+    "ssl": {
+      "cert_chain_file": "/etc/sensu/ssl/cert.pem",
+      "private_key_file": "/etc/sensu/ssl/key.pem"
+    },
+    "port": 5671,
+    "host": "%RABBITMQ_ADDR_OR_IP%",
+    "user": "sensu",
+    "password": "pass",
+    "vhost": "/sensu"
+  },
+  "client": {
+    "name": "sensu-metrics-grafana",
+    "address": "$HOSTNAME",
+    "subscriptions": [ "default", "sensu-metrics-grafana" ]
+  }
+}
+EOF

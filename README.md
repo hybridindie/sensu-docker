@@ -38,5 +38,52 @@ _it's normal to see a rc or console errors and they can safely be ignored._ once
 
 This setup also monitors itself so you should be able to see three docker containers in the client list (the Docker container HOSTNAME is reflected in the IP Address column). Each Redis, RabbitMQ, and Sensu's components being monitored respectively. It's up to you at this point to secure the dashboard if you are going to use this in production.
 
+_there is a metrics version in progress that can be stood up with_
+
+```
+sudo docker-compose -f sensu-metrics.yml build
+sudo docker-compose -f sensu-metrics.yml up
+```
+
+_This adds Grafana and InfluxDB for metics_
+
+
 Connecting a new Client
 -----------------------
+
+Copy the ssl_certs folder from the project root (_generated when setting up the server_) to the client along with the install_client script. If you no longer have this folder you will need to replace the certs on the server after running the script again.
+
+run install_client.sh
+
+```
+sudo ./install_client.sh
+```
+
+Modify the client config /etc/sensu/config.json with the necessary information.
+
+Replace `%RABBITMQ_ADDR_OR_IP%` with the address for RabbitMQ from the docker-compose launch
+Replace `%NODE_NAME%` with a unique name to identify this client
+Replace `%HOSTNAME%` with the hostname or IP of the client
+
+Adjust subscriptions to meet your needs
+
+```
+{
+  "rabbitmq": {
+    "ssl": {
+      "cert_chain_file": "/etc/sensu/ssl/cert.pem",
+      "private_key_file": "/etc/sensu/ssl/key.pem"
+    },
+    "port": 5671,
+    "host": "$RABBITMQ_ADDR",
+    "user": "sensu",
+    "password": "pass",
+    "vhost": "/sensu"
+  },
+  "client": {
+    "name": "sensu-metrics-grafana",
+    "address": "%HOSTNAME%",
+    "subscriptions": [ "default" ]
+  }
+}
+```
