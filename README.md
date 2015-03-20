@@ -48,12 +48,12 @@ sudo docker-compose -f sensu-metrics.yml up
 _This adds Grafana and InfluxDB for metics_
 
 
-Connecting a new Client
+Connecting a new Ubuntu Client
 -----------------------
 
 Copy the ssl_certs folder from the project root (_generated when setting up the server_) to the client along with the install_client script. If you no longer have this folder you will need to replace the certs on the server after running the script again.
 
-run install_client.sh
+make sure you have `wget` installed and run install_client.sh
 
 ```
 sudo ./install_client.sh
