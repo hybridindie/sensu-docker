@@ -61,9 +61,9 @@ sudo ./install_client.sh
 
 Modify the client config /etc/sensu/config.json with the necessary information.
 
-Replace `%RABBITMQ_ADDR_OR_IP%` with the address for RabbitMQ from the docker-compose launch
-Replace `%NODE_NAME%` with a unique name to identify this client
-Replace `%HOSTNAME%` with the hostname or IP of the client
+Replace `%RABBITMQ_ADDR_OR_IP%` with the address for RabbitMQ from the docker-compose launch.
+Replace `%NODE_NAME%` with a unique name to identify this client.
+Replace `%HOSTNAME%` with the hostname or IP of the client.
 
 Adjust subscriptions to meet your needs
 
@@ -81,7 +81,7 @@ Adjust subscriptions to meet your needs
     "vhost": "/sensu"
   },
   "client": {
-    "name": "sensu-metrics-grafana",
+    "name": "%NODE_NAME%",
     "address": "%HOSTNAME%",
     "subscriptions": [ "default" ]
   }
