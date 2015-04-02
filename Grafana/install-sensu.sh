@@ -5,8 +5,11 @@ echo "deb http://repos.sensuapp.org/apt sensu main" > /etc/apt/sources.list.d/se
 apt-get update && apt-get install -y git-core sensu
 echo "sensu hold" | dpkg --set-selections
 
-echo "EMBEDDED_RUBY=true" > /etc/default/sensu & ln -s /opt/sensu/embedded/bin/ruby /usr/bin/ruby
-echo "LOG_LEVEL=info" > /etc/default/sensu
+cat << EOF > /etc/default/sensu
+  EMBEDDED_RUBY=true
+  LOG_LEVEL=info
+EOF
+ln -s /opt/sensu/embedded/bin/ruby /usr/bin/ruby
 /opt/sensu/embedded/bin/gem install redphone --no-rdoc --no-ri
 /opt/sensu/embedded/bin/gem install mail --no-rdoc --no-ri --version 2.5.4
 
