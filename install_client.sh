@@ -6,8 +6,8 @@ apt-get update && apt-get install -y git-core sensu
 echo "sensu hold" | dpkg --set-selections
 
 cat << EOF > /etc/default/sensu
-  "EMBEDDED_RUBY=true"
-  "LOG_LEVEL=info"
+  EMBEDDED_RUBY=true
+  LOG_LEVEL=info
 EOF
 ln -s /opt/sensu/embedded/bin/ruby /usr/bin/ruby
 /opt/sensu/embedded/bin/gem install redphone --no-rdoc --no-ri
@@ -23,7 +23,7 @@ mkdir -p /etc/sensu/ssl
 cp /ssl_certs/client/cert.pem /tmp/ssl_certs/client/key.pem /etc/sensu/ssl
 
 cat << EOF > /etc/sensu/config.json
-{
+{one se
   "rabbitmq": {
     "ssl": {
       "cert_chain_file": "/etc/sensu/ssl/cert.pem",
