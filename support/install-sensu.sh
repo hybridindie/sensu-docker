@@ -2,9 +2,10 @@
 if [ -f "/usr/local/etc/sensu-docker/sensu_ca/serial" ]; then
   echo "Certificates already generated"
 else
-  mkdir -p /usr/local/etc/sensu-docker && cd /usr/local/etc/sensu-docker
+  cd /usr/local/etc/sensu-docker
   mkdir -p client server sensu_ca/private sensu_ca/certs
   passwd=$(openssl rand -base64 32 | base64 | head -c 24 ; echo)
+  touch sensu_ca/index.txt
   echo 01 > sensu_ca/serial
   cd sensu_ca
   openssl req -x509 -config /usr/local/etc/sensu-docker/openssl.cnf -newkey rsa:2048 -days 1825 -out cacert.pem -outform PEM -subj /CN=SensuCA/ -nodes

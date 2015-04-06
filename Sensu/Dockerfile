@@ -6,7 +6,8 @@ RUN apt-get update && apt-get install -y curl wget openssl supervisor
 RUN useradd -d /home/sensu -m -s /bin/bash sensu
 RUN echo sensu:sensu | chpasswd
 
-ADD https://raw.githubusercontent.com/jbrien/sensu-docker/restructure/support/openssl.cnf /usr/local/etc/sensu-docker
+RUN mkdir -p /usr/local/etc/sensu-docker
+ADD https://raw.githubusercontent.com/jbrien/sensu-docker/restructure/support/openssl.cnf /usr/local/etc/sensu-docker/
 ADD https://raw.githubusercontent.com/jbrien/sensu-docker/restructure/support/install-sensu.sh /tmp/
 RUN chmod +x /tmp/install-sensu.sh
 RUN /tmp/install-sensu.sh
