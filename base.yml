@@ -2,8 +2,6 @@ rabbitmq:
   build: ./RabbitMQ
   env_file:
     - support/sensu.env
-  expose:
-    - "5671"
   ports:
     - "5671:5671"
 redis:

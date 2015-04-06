@@ -54,10 +54,10 @@ generate_environment() {
 RABBITMQ_PASSWD=$(openssl rand -base64 32 | base64 | head -c 24 ; echo)
 INFLUXDB_PASSWD=$(openssl rand -base64 32 | base64 | head -c 24 ; echo)
 INFLUXDB_ROOT_PASSWD=$(openssl rand -base64 32 | base64 | head -c 24 ; echo)
-CLIENT_KEY=$(cat ssl/client/key.pem)
-CLIENT_CERT=$(cat ssl/client/cert.pem)
-SERVER_KEY=$(cat ssl/server/key.pem)
-SERVER_CERT=$(cat ssl/server/cert.pem)
+CLIENT_KEY='$(cat ssl/client/key.pem)'
+CLIENT_CERT='$(cat ssl/client/cert.pem)'
+SERVER_KEY='$(cat ssl/server/key.pem)'
+SERVER_CERT='$(cat ssl/server/cert.pem)'
 EOF
 }
 
