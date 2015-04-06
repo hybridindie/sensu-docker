@@ -12,7 +12,7 @@ cat << EOF > /etc/sensu/config.json
     "port": 5671,
     "host": "$RABBITMQ_PORT_5671_TCP_ADDR",
     "user": "sensu",
-    "password": "pass",
+    "password": "$RABBITMQ_PASSWD",
     "vhost": "/sensu"
   },
   "client": {
@@ -25,6 +25,7 @@ EOF
 
 sed -i -e "s/%INFLUXDB_HOST%/$INFLUXDB_HOST/g" \
        -e "s/%INFLUXDB_PORT%/$INFLUXDB_PORT/g" \
+       -e "s/%INFLUXDB_PASSWD%/$INFLUXDB_SENSU_PASSWD/g" \
        /usr/share/grafana/config.js
 
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf

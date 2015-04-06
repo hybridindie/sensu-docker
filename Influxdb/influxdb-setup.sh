@@ -7,11 +7,21 @@ else
 
   /etc/init.d/influxdb start
 
-  until (curl -X POST 'http://localhost:8086/db?u=root&p=root' \
-              -d '{"name": "sensu"}' 2>/dev/null) do sleep 1; done
-  echo 'Created database "sensu"'
+  until (curl -X POST 'http://localhost:8086/db/site_dev/users?u=root&p=root' \
+              -d '{"name": "sensu", "password": "$INFLUXDB_SENSU_PASSWD"}' 2>/dev/null) \
+              do sleep 1; done
+  echo 'Created User "sensu"'
 
-  until (curl -X POST 'http://localhost:8086/db?u=root&p=root' \
+  until (curl -X POST 'http://localhost:8086/cluster_admins?u=root&p=root' \
+              -d '{"name": "root", "password": "$INFLUXDB_ROOT_PASSWD"}' 2>/dev/null) \
+              do sleep 1; done
+  echo 'Changed "root" password'
+
+  until (curl -X POST 'http://localhost:8086/db?u=sensu&p=$INFLUXDB_PASSWD' \
+              -d '{"name": "grafana"}' 2>/dev/null) do sleep 1; done
+  echo 'Created database "grafana"'
+
+  until (curl -X POST 'http://localhost:8086/db?u=sensu&p=$INFLUXDB_PASSWD' \
               -d '{"name": "grafana"}' 2>/dev/null) do sleep 1; done
   echo 'Created database "grafana"'
 

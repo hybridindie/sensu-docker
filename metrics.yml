@@ -1,0 +1,42 @@
+rabbitmq:
+  extends:
+    file: base.yml
+    service: rabbitmq
+redis:
+  extends:
+    file: base.yml
+    service: redis
+influxdb:
+  build: ./Influxdb
+  env_file:
+    - ./support/sensu.env
+  links:
+    - rabbitmq
+  expose:
+    - "8083"
+    - "8086"
+    - "8090"
+    - "8099"
+  ports:
+    - "8086:8086"
+    - "8083:8083"
+grafana:
+  build: ./Grafana
+  env_file:
+    - ./support/sensu.env
+  # environment:
+  #   - INFLUXDB_HOST=localhost
+  #   - INFLUXDB_PORT=8086
+  links:
+    - rabbitmq
+    - influxdb
+  ports:
+    - "8888:80"
+sensu:
+  extends:
+    file: base.yml
+    service: sensu
+  links:
+    - redis
+    - rabbitmq
+    - influxdb

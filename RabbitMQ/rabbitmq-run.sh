@@ -12,7 +12,7 @@ cat << EOF > /etc/sensu/config.json
     "port": 5671,
     "host": "localhost",
     "user": "sensu",
-    "password": "pass",
+    "password": "$RABBITMQ_PASSWD",
     "vhost": "/sensu"
   },
   "client": {
@@ -34,7 +34,7 @@ cat << EOF > /etc/rabbitmq/rabbitmq.config
   {rabbit, [
     {default_vhost,       <<"/sensu">>},
     {default_user,        <<"sensu">>},
-    {default_pass,        <<"pass">>},
+    {default_pass,        <<"$RABBITMQ_PASSWD">>},
     {default_permissions, [<<".*">>, <<".*">>, <<".*">>]},
     {ssl_listeners, [5671]},
       {ssl_options, [{cacertfile,"/etc/rabbitmq/ssl/cacert.pem"},
@@ -45,3 +45,5 @@ cat << EOF > /etc/rabbitmq/rabbitmq.config
   ]}
 ].
 EOF
+
+/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf

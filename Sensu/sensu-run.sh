@@ -21,7 +21,7 @@ else
       "port": 5671,
       "host": "$RABBITMQ_PORT_5671_TCP_ADDR",
       "user": "sensu",
-      "password": "pass",
+      "password": "$RABBITMQ_PASSWD",
       "vhost": "/sensu"
     },
     "redis": {

@@ -12,14 +12,14 @@ define(['settings'], function(Settings) {
     'sensu': {
       type: 'influxdb',
       url: "http://%INFLUXDB_HOST%:%INFLUXDB_PORT%/db/sensu",
-      username: 'root',
-      password: 'root'
+      username: 'sensu',
+      password: '%INFLUXDB_PASSWD%'
     },
     'grafana': {
       type: 'influxdb',
       url: "http://%INFLUXDB_HOST%:%INFLUXDB_PORT%/db/grafana",
-      username: 'root',
-      password: 'root',
+      username: 'sensu',
+      password: '%INFLUXDB_PASSWD%',
       grafanaDB: true
     }
   },
