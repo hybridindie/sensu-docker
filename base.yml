@@ -2,12 +2,16 @@ rabbitmq:
   build: ./RabbitMQ
   env_file:
     - support/sensu.env
+  volumes:
+    - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
   ports:
     - "5671:5671"
 redis:
   build: ./Redis
   env_file:
     - support/sensu.env
+  volumes:
+    - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
   links:
     - rabbitmq
   expose:
@@ -19,6 +23,7 @@ sensu:
   environment:
     - SENSU_METRICS=false
   volumes:
+    - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
     - /var/log/sensu:/var/log/sensu
     - /etc/sensu/conf.d:/etc/sensu/conf.d
   links:

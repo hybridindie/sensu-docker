@@ -10,6 +10,8 @@ influxdb:
   build: ./Influxdb
   env_file:
     - ./support/sensu.env
+  volumes:
+    - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
   links:
     - rabbitmq
   expose:
@@ -24,6 +26,8 @@ grafana:
   build: ./Grafana
   env_file:
     - ./support/sensu.env
+  volumes:
+    - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
   links:
     - rabbitmq
     - influxdb
