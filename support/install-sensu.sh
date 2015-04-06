@@ -1,8 +1,7 @@
 #!/bin/bash
-if [ -f "/usr/local/etc/sensu-docker" ]; then
+if [ -f "/usr/local/etc/sensu-docker/sensu_ca/serial" ]; then
   echo "Certificates already generated"
 else
-  mkdir -p /usr/local/etc/sensu-docker
   passwd=$(openssl rand -base64 32 | base64 | head -c 24 ; echo)
   echo 01 > sensu_ca/serial
   cd sensu_ca
