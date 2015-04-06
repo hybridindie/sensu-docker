@@ -15,8 +15,8 @@ else
   {
     "rabbitmq": {
       "ssl": {
-        "cert_chain_file": "/etc/sensu/ssl/cert.pem",
-        "private_key_file": "/etc/sensu/ssl/key.pem"
+        "cert_chain_file": "/usr/local/etc/sensu-docker/client/cert.pem",
+        "private_key_file": "/usr/local/etc/sensu-docker/client/key.pem"
       },
       "port": 5671,
       "host": "$RABBITMQ_PORT_5671_TCP_ADDR",

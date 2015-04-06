@@ -14,17 +14,17 @@ EOF
 }
 
 clean() {
-  rm -rf support/ssl support/sensu.env
+  rm -rf /usr/local/etc/sensu-docker/* /usr/local/etc/sensu-docker/sensu.env
 }
 
 setup() {
   workdir=$(pwd)
-  mkdir support/ssl && cd support/ssl
-  mkdir -p client server sensu_ca/private sensu_ca/certs
+  mkdir /usr/local/etc/sensu-docker
 }
 
 generate_ssl() {
-  cd support/ssl
+  workdir=$(pwd)
+  cd /usr/local/etc/sensu-docker
   passwd=$(openssl rand -base64 32 | base64 | head -c 24 ; echo)
   rm sensu_ca/index.txt sensu_ca/serial
   touch sensu_ca/index.txt
@@ -46,11 +46,11 @@ generate_ssl() {
   openssl ca -config $workdir/support/openssl.cnf -in ../client/req.pem -out ../client/cert.pem -batch -extensions client_ca_extensions
   cd ../client
   openssl pkcs12 -export -out keycert.p12 -in cert.pem -inkey key.pem -passout pass:$passwd
-  cd ../../
+  cd ../
 }
 
 generate_environment() {
-  cat << EOF > sensu.env
+  cat << EOF > /usr/local/etc/sensu-docker/sensu.env
 RABBITMQ_PASSWD=$(openssl rand -base64 32 | base64 | head -c 24 ; echo)
 INFLUXDB_PASSWD=$(openssl rand -base64 32 | base64 | head -c 24 ; echo)
 INFLUXDB_ROOT_PASSWD=$(openssl rand -base64 32 | base64 | head -c 24 ; echo)

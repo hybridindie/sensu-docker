@@ -1,19 +1,17 @@
-datastore:
-  build: ./Datastore
 rabbitmq:
   build: ./RabbitMQ
   env_file:
-    - support/sensu.env
-  volumes_from:
-    - datastore
+    - /usr/local/etc/sensu-docker/sensu.env
+  volumes:
+    - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
   ports:
     - "5671:5671"
 redis:
   build: ./Redis
   env_file:
-    - support/sensu.env
-  volumes_from:
-    - datastore
+    - /usr/local/etc/sensu-docker/sensu.env
+  volumes:
+    - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
   links:
     - rabbitmq
   expose:
@@ -21,12 +19,11 @@ redis:
 sensu:
   build: ./Sensu
   env_file:
-    - support/sensu.env
+    - /usr/local/etc/sensu-docker/sensu.env
   environment:
     - SENSU_METRICS=false
-  volumes_from:
-    - datastore
   volumes:
+    - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
     - /var/log/sensu:/var/log/sensu
     - /etc/sensu/conf.d:/etc/sensu/conf.d
   links:
