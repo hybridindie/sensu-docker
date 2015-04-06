@@ -24,9 +24,6 @@ grafana:
   build: ./Grafana
   env_file:
     - ./support/sensu.env
-  # environment:
-  #   - INFLUXDB_HOST=localhost
-  #   - INFLUXDB_PORT=8086
   links:
     - rabbitmq
     - influxdb

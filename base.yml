@@ -1,23 +1,23 @@
 rabbitmq:
-  build: ./rabbitmq-dockerfile
+  build: ./RabbitMQ
   env_file:
-    - ./support/sensu.env
+    - support/sensu.env
   expose:
     - "5671"
   ports:
     - "5671:5671"
 redis:
-  build: ./redis-dockerfile
+  build: ./Redis
   env_file:
-    - ./support/sensu.env
+    - support/sensu.env
   links:
     - rabbitmq
   expose:
     - "6379"
 sensu:
-  build: ./sensu-dockerfile
+  build: ./Sensu
   env_file:
-    - ./support/sensu.env
+    - support/sensu.env
   environment:
     - SENSU_METRICS=false
   volumes:

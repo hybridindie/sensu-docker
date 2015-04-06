@@ -26,6 +26,7 @@ setup() {
 generate_ssl() {
   cd support/ssl
   passwd=$(openssl rand -base64 32 | base64 | head -c 24 ; echo)
+  rm sensu_ca/index.txt sensu_ca/serial
   touch sensu_ca/index.txt
   echo 01 > sensu_ca/serial
   cd sensu_ca
@@ -35,14 +36,14 @@ generate_ssl() {
   openssl genrsa -out key.pem 2048
   openssl req -new -key key.pem -out req.pem -outform PEM -subj /CN=sensu/O=server/ -nodes
   cd ../sensu_ca
-  openssl ca -config $workdir/support/openssl.cnf -in ../server/req.pem -out ../server/cert.pem -notext -batch -extensions server_ca_extensions
+  openssl ca -config $workdir/support/openssl.cnf -in ../server/req.pem -out ../server/cert.pem -batch -extensions server_ca_extensions
   cd ../server
   openssl pkcs12 -export -out keycert.p12 -in cert.pem -inkey key.pem -passout pass:$passwd
   cd ../client
   openssl genrsa -out key.pem 2048
   openssl req -new -key key.pem -out req.pem -outform PEM -subj /CN=sensu/O=client/ -nodes
   cd ../sensu_ca
-  openssl ca -config $workdir/support/openssl.cnf -in ../client/req.pem -out ../client/cert.pem -notext -batch -extensions client_ca_extensions
+  openssl ca -config $workdir/support/openssl.cnf -in ../client/req.pem -out ../client/cert.pem -batch -extensions client_ca_extensions
   cd ../client
   openssl pkcs12 -export -out keycert.p12 -in cert.pem -inkey key.pem -passout pass:$passwd
   cd ../../
@@ -53,6 +54,10 @@ generate_environment() {
 RABBITMQ_PASSWD=$(openssl rand -base64 32 | base64 | head -c 24 ; echo)
 INFLUXDB_PASSWD=$(openssl rand -base64 32 | base64 | head -c 24 ; echo)
 INFLUXDB_ROOT_PASSWD=$(openssl rand -base64 32 | base64 | head -c 24 ; echo)
+CLIENT_KEY=$(cat ssl/client/key.pem)
+CLIENT_CERT=$(cat ssl/client/cert.pem)
+SERVER_KEY=$(cat ssl/server/key.pem)
+SERVER_CERT=$(cat ssl/server/cert.pem)
 EOF
 }
 

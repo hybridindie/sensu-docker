@@ -9,7 +9,7 @@ cat << EOF > /etc/default/sensu
   EMBEDDED_RUBY=true
   LOG_LEVEL=info
 EOF
-ln -s /opt/sensu/embedded/bin/ruby /usr/bin/ruby
+ln -sf /opt/sensu/embedded/bin/ruby /usr/bin/ruby
 /opt/sensu/embedded/bin/gem install redphone --no-rdoc --no-ri
 /opt/sensu/embedded/bin/gem install mail --no-rdoc --no-ri --version 2.5.4
 
