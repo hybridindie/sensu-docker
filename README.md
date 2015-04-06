@@ -25,40 +25,44 @@ Clone and Run the Sensu Server
 
 Clone the repo ```git clone https://github.com/jbrien/sensu-docker.git```
 
-Generate the SSL certificates for the server and clients. _This is a modified version of one provided by the Sensu Folks._ Then build and run the docker stack.
+Generate the environment variables and ssl certs for RabbitMQ and Sensu. The ssl certificates and generated in `/usr/local/etc/sensu-docker` on the docker host. Take note of this to be able and distribute the client folder and RabbitMQ password from the sensu.env file for new sensu clients
 
 ```
 cd sensu-docker
-./ssl_certs.sh generate
-sudo docker-compose build
-sudo docker-compose up
+sudo ./setup_sensu_docker.sh generate
+sudo docker-compose -f base.yml build
+sudo docker-compose -f base.yml up
 ```
 
-_it's normal to see a rc or console errors and they can safely be ignored._ once the download and build process is done you can run `sudo docker-compose up` to start the cluster. Once up browse to http://[your-server-ip]:3000/ to see the sensu dashboard.
+_it's normal to see a rc or console errors and they can safely be ignored._ once the download and build process is done you can run `sudo docker-compose -f base.yml up` to start the cluster. Once up browse to http://[your-server-ip]:3000/ to see the sensu dashboard.
 
 This setup also monitors itself so you should be able to see three docker containers in the client list (the Docker container HOSTNAME is reflected in the IP Address column). Each Redis, RabbitMQ, and Sensu's components being monitored respectively. It's up to you at this point to secure the dashboard if you are going to use this in production.
+
+There is a volume shared from the Sensu server container in `/etc/sensu/conf.d`. Installing new checks to this location can restarting the sensu-server service will load them.
+
+`sudo docker exec -t sensudocker_sensu_1 supervisorctl restart sensu-server`
 
 _there is a metrics version in progress that can be stood up with_
 
 ```
-sudo docker-compose -f sensu-metrics.yml build
-sudo docker-compose -f sensu-metrics.yml up
+sudo docker-compose -f metrics.yml build
+sudo docker-compose -f metrics.yml up
 ```
 
-_This adds Grafana and InfluxDB for metics_
+_This adds Grafana and InfluxDB for metrics_
 
 
 Connecting a new Ubuntu Client
 -----------------------
 
-Copy the ssl_certs folder from the project root (_generated when setting up the server_) to the client along with the install_client script. If you no longer have this folder you will need to replace the certs on the server after running the script again.
+Copy the `/usr/local/etc/sensu-docker/client` folder from the project root (_generated when setting up the server_) to the client along with the `install_client.sh` script. If you no longer have this folder you will need to replace the certs on the server after running the script again.
 
 make sure you have `wget` installed and run install_client.sh
 
 ```
 sudo ./install_client.sh
 ```
-
+Copy the client `cert.pem` and `key.pem` the the `/etc/sensu/ssl` folder.
 Modify the client config /etc/sensu/config.json with the necessary information.
 
 Replace `%RABBITMQ_ADDR_OR_IP%` with the address for RabbitMQ from the docker-compose launch.
@@ -75,7 +79,7 @@ Adjust subscriptions to meet your needs
       "private_key_file": "/etc/sensu/ssl/key.pem"
     },
     "port": 5671,
-    "host": "$RABBITMQ_ADDR",
+    "host": "%RABBITMQ_ADDR_OR_IP%",
     "user": "sensu",
     "password": "pass",
     "vhost": "/sensu"

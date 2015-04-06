@@ -20,7 +20,6 @@ cp -Rpf /tmp/sensu_plugins/plugins /etc/sensu/
 find /etc/sensu/plugins/ -name *.rb -exec chmod +x {} \;
 
 mkdir -p /etc/sensu/ssl
-cp /ssl_certs/client/cert.pem /tmp/ssl_certs/client/key.pem /etc/sensu/ssl
 
 cat << EOF > /etc/sensu/config.json
 {one se
@@ -38,7 +37,7 @@ cat << EOF > /etc/sensu/config.json
   "client": {
     "name": "%NODE_NAME%",
     "address": "%HOSTNAME%",
-    "subscriptions": [ "default", "dcm-single-node" ]
+    "subscriptions": [ "default" ]
   }
 }
 EOF
