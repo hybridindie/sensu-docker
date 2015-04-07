@@ -14,12 +14,14 @@ EOF
 }
 
 clean() {
-  rm -rf /usr/local/etc/sensu-docker/* /usr/local/etc/sensu-docker/sensu.env
+  rm -rf /usr/local/etc/sensu-docker
 }
 
 setup() {
   workdir=$(pwd)
-  mkdir /usr/local/etc/sensu-docker
+  mkdir /usr/local/etc/sensu-docker && cd /usr/local/etc/sensu-docker
+  mkdir -p client server sensu_ca/private sensu_ca/certs
+  cd $workdir
 }
 
 generate_ssl() {
