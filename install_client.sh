@@ -13,7 +13,7 @@ ln -sf /opt/sensu/embedded/bin/ruby /usr/bin/ruby
 /opt/sensu/embedded/bin/gem install redphone --no-rdoc --no-ri
 /opt/sensu/embedded/bin/gem install mail --no-rdoc --no-ri --version 2.5.4
 
-rm -rf /etc/sensu/plugins
+rm -rf /etc/sensu/plugins /tmp/sensu_plugins
 git clone https://github.com/sensu/sensu-community-plugins.git /tmp/sensu_plugins
 
 cp -Rpf /tmp/sensu_plugins/plugins /etc/sensu/
@@ -21,7 +21,7 @@ find /etc/sensu/plugins/ -name *.rb -exec chmod +x {} \;
 
 mkdir -p /etc/sensu/ssl
 
-cat << EOF > /etc/sensu/config.json
+cat << EOF > /etc/sensu/conf.d/config.json
 {one se
   "rabbitmq": {
     "ssl": {
@@ -43,11 +43,13 @@ cat << EOF > /etc/sensu/config.json
 EOF
 
 echo "Next steps are:"
-echo "* Retrieve the RabbitMQ password from /usr/local/etc/sensu-docker/sensu.env on the server."
-echo "* modify /etc/sensu/config.json with your Sensu RabbitMQ host and password."
-echo "* Create a unique name and add the hostname of this node for the 'client' section of /etc/sensu/config.json."
-echo "* mkdir -p /etc/sensu/ssl"
-echo "* copy /usr/local/etc/client/{cert,key}.pem from the server to /etc/sensu/ssl"
-echo "* sudo service sensu-client start"
+echo "  * Retrieve the RabbitMQ password from"
+echo "    /usr/local/etc/sensu-docker/sensu.env on the server."
+echo "  * modify /etc/sensu/config.json with your Sensu RabbitMQ host and password."
+echo "  * Create a unique name and add the hostname of this node"
+echo "    for the 'client' section of /etc/sensu/conf.d/config.json."
+echo "  * mkdir -p /etc/sensu/ssl"
+echo "  * copy /usr/local/etc/client/{cert,key}.pem from the server to /etc/sensu/ssl"
+echo "  * sudo service sensu-client start"
 echo ""
 echo "Now watch the Uchiwa dashbard of the server for the node to join."
