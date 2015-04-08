@@ -1,4 +1,4 @@
-FROM library/rabbitmq
+FROM library/rabbitmq:management
 MAINTAINER John Dilts <john.dilts@enstratius.com>
 
 RUN apt-get update && apt-get install -y curl wget openssl supervisor

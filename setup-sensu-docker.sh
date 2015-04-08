@@ -38,14 +38,14 @@ generate_ssl() {
   openssl genrsa -out key.pem 2048
   openssl req -new -key key.pem -out req.pem -outform PEM -subj /CN=sensu/O=server/ -nodes
   cd ../sensu_ca
-  openssl ca -config $workdir/support/openssl.cnf -in ../server/req.pem -out ../server/cert.pem -batch -extensions server_ca_extensions
+  openssl ca -config $workdir/support/openssl.cnf -in ../server/req.pem -out ../server/cert.pem -notext -batch -extensions server_ca_extensions
   cd ../server
   openssl pkcs12 -export -out keycert.p12 -in cert.pem -inkey key.pem -passout pass:$passwd
   cd ../client
   openssl genrsa -out key.pem 2048
   openssl req -new -key key.pem -out req.pem -outform PEM -subj /CN=sensu/O=client/ -nodes
   cd ../sensu_ca
-  openssl ca -config $workdir/support/openssl.cnf -in ../client/req.pem -out ../client/cert.pem -batch -extensions client_ca_extensions
+  openssl ca -config $workdir/support/openssl.cnf -in ../client/req.pem -out ../client/cert.pem -notext -batch -extensions client_ca_extensions
   cd ../client
   openssl pkcs12 -export -out keycert.p12 -in cert.pem -inkey key.pem -passout pass:$passwd
   cd ../

@@ -20,7 +20,6 @@ cat << EOF > /etc/sensu/config.json
 }
 EOF
 
-rabbitmq-plugins enable rabbitmq_management
 chown -R rabbitmq:rabbitmq /etc/rabbitmq/
 
 cat << EOF > /etc/rabbitmq/rabbitmq.config
@@ -31,7 +30,7 @@ cat << EOF > /etc/rabbitmq/rabbitmq.config
     {default_pass,        <<"$RABBITMQ_PASSWD">>},
     {default_permissions, [<<".*">>, <<".*">>, <<".*">>]},
     {ssl_listeners, [5671]},
-      {ssl_options, [{cacertfile,"/usr/local/etc/sensu-docker/server/cacert.pem"},
+      {ssl_options, [{cacertfile,"/usr/local/etc/sensu-docker/sensu_ca/cacert.pem"},
                      {certfile,"/usr/local/etc/sensu-docker/server/cert.pem"},
                      {keyfile,"/usr/local/etc/sensu-docker/server/key.pem"},
                      {verify,verify_peer},
