@@ -164,17 +164,14 @@ EOF
 # Set by the metrics.yml
 if [ ! -z "$SENSU_METRICS" ] ; then
 
-  echo "Downloading InfluxDB Handler"
-  git clone https://github.com/nohtyp/sensu-influxdb.git /tmp/sensu-influxdb
-  cp -Rpf /tmp/sensu-influxdb/etc/sensu/handlers/metrics/sensu-metrics.rb /etc/sensu/handlers/influxdb-handler.rb
-  chmod 755 /etc/sensu/handlers/influxdb-handler.rb
-  
+  echo "Setting Up InfluxDB Handler"
+  cp /tmp/sensu_plugins/handlers/metrics/influxdb-metrics.rb /etc/sensu/handlers
   /opt/sensu/embedded/bin/gem install influxdb --no-rdoc --no-ri
 
   cat << EOF > /etc/sensu/conf.d/influxdb-metrics.json
   {
     "influxdb": {
-      "host": "$INFLUXDB_PORT_8086_TCP_ADDR",
+      "server": "$INFLUXDB_PORT_8086_TCP_ADDR",
       "port": "$INFLUXDB_PORT_8086_TCP_PORT",
       "username": "sensu",
       "password": "$INFLUXDB_PASSWD",
@@ -189,7 +186,7 @@ EOF
     "handlers": {
       "influxdb": {
         "type": "pipe",
-        "command": "/etc/sensu/handlers/influxdb-handler.rb"
+        "command": "/etc/sensu/handlers/influxdb-metrics.rb"
       }
     }
   }

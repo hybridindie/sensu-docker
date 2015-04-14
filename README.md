@@ -54,6 +54,20 @@ sudo docker-compose -f metrics.yml up
 
 The root password for InfluxDB is available in the `/usr/local/etc/sensu-docker/sensu.env` as is the sensu user used by Sensu to push its time series to InfluxDB.
 
+After a few minutes you can log into InfluxDB with the sensu username and password and using `sensu` as the database (The sensu user is restricted to just seeing the data in the sensu database and can not log in otherwise). The data is InfluxDB is disposable; so each restart of the InfluxDB container will destroy any historical data.
+
+* Select `Explor Data` in the header
+* putting `list series` in the Query fields will show all the metrics being collected
+* putting `select * from /.*/ limit 5` will show & graph the last five results for each of the time series
+
+Other Queries working out of the box
+
+```
+select * from cpu_total_user where host =~ /sensu-server/
+select mean(value) from cpu_total_idle group by time(30s) where time > now() - 1d and host =~ /sensu-server/
+
+```
+
 Connecting a new Ubuntu Client
 -----------------------
 
