@@ -15,8 +15,8 @@ Vagrant.configure(2) do |config|
   # RabbitMQ
   config.vm.network :forwarded_port, guest: 5671, host: 5671
   # InfluxDB
+  config.vm.network :forwarded_port, guest: 8083, host: 8083
   config.vm.network :forwarded_port, guest: 8086, host: 8086
-  config.vm.network :forwarded_port, guest: 8087, host: 8087
 
   config.vm.synced_folder ".", "/vagrant"
   config.vm.provision :shell do |shell|
