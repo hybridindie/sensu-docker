@@ -32,9 +32,18 @@ until (curl -X POST 'http://localhost:8086/db?u=root&p='"$INFLUXDB_ROOT_PASSWD" 
 echo 'Created database "sensu"'
 
 until (curl -X POST 'http://localhost:8086/db/sensu/users?u=root&p='"$INFLUXDB_ROOT_PASSWD" \
-            -d '{"name": "sensu", "password": "'"$INFLUXDB_PASSWD"'"}' 2>/dev/null) \
+            -d '{"name": "sensu", "password": "'"$INFLUXDB_SENSU_PASSWD"'"}' 2>/dev/null) \
             do sleep 1; done
 echo 'Created User "sensu"'
+
+until (curl -X POST 'http://localhost:8086/db?u=root&p='"$INFLUXDB_ROOT_PASSWD" \
+            -d '{"name": "grafana"}' 2>/dev/null) do sleep 1; done
+echo 'Created database "grafana"'
+
+until (curl -X POST 'http://localhost:8086/db/grafana/users?u=root&p='"$INFLUXDB_ROOT_PASSWD" \
+            -d '{"name": "grafana", "password": "'"$INFLUXDB_GRAFANA_PASSWD"'"}' 2>/dev/null) \
+            do sleep 1; done
+echo 'Created User "grafana"'
 
 /etc/init.d/influxdb stop
 sleep 3

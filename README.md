@@ -65,7 +65,7 @@ Other Queries working out of the box
 ```
 select * from cpu_total_user where host =~ /sensu-server/
 select mean(value) from cpu_total_idle group by time(30s) where time > now() - 1d and host =~ /sensu-server/
-
+select mean(value) from load_avg_()
 ```
 
 Connecting a new Ubuntu Client

@@ -174,7 +174,7 @@ if [ ! -z "$SENSU_METRICS" ] ; then
       "server": "$INFLUXDB_PORT_8086_TCP_ADDR",
       "port": "$INFLUXDB_PORT_8086_TCP_PORT",
       "username": "sensu",
-      "password": "$INFLUXDB_PASSWD",
+      "password": "$INFLUXDB_SENSU_PASSWD",
       "database": "sensu"
     }
   }
@@ -200,7 +200,7 @@ EOF
         "handlers": [
           "default"
         ],
-        "command": "/etc/sensu/plugins/processes/check-procs.rb -p grafana-server -C 1 -w 4 -c 5",
+        "command": "/etc/sensu/plugins/processes/check-procs.rb -p apache2 -C 1 -w 4 -c 5",
         "interval": 60,
         "occurrences": 2,
         "refresh": 300,

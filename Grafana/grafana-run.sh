@@ -20,4 +20,9 @@ cat << EOF > /etc/sensu/config.json
 }
 EOF
 
+sed -i -e "s/%INFLUXDB_HOST%/$INFLUXDB_PORT_8086_TCP_ADDR/g" /usr/share/grafana/config.js
+sed -i -e "s/%INFLUXDB_PORT%/$INFLUXDB_PORT_8086_TCP_PORT/g" /usr/share/grafana/config.js
+sed -i -e "s/%INFLUXDB_GRAFANA_PASSWD%/$INFLUXDB_GRAFANA_PASSWD/g" /usr/share/grafana/config.js
+sed -i -e "s/%INFLUXDB_SENSU_PASSWD%/$INFLUXDB_SENSU_PASSWD/g" /usr/share/grafana/config.js
+
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
