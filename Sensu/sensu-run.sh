@@ -168,14 +168,16 @@ if [ ! -z "$SENSU_METRICS" ] ; then
   git clone https://github.com/nohtyp/sensu-influxdb.git /tmp/sensu-influxdb
   cp -Rpf /tmp/sensu-influxdb/etc/sensu/handlers/metrics/sensu-metrics.rb /etc/sensu/handlers/influxdb-handler.rb
   chmod 755 /etc/sensu/handlers/influxdb-handler.rb
+  
+  /opt/sensu/embedded/bin/gem install influxdb --no-rdoc --no-ri
 
   cat << EOF > /etc/sensu/conf.d/influxdb-metrics.json
   {
     "influxdb": {
       "host": "$INFLUXDB_PORT_8086_TCP_ADDR",
       "port": "$INFLUXDB_PORT_8086_TCP_PORT",
-      "username": "root",
-      "password": "root",
+      "username": "sensu",
+      "password": "$INFLUXDB_PASSWD",
       "database": "sensu"
     }
   }
@@ -187,7 +189,7 @@ EOF
     "handlers": {
       "influxdb": {
         "type": "pipe",
-        "command": "/etc/sensu/handlers/influxdb-metrics.rb"
+        "command": "/etc/sensu/handlers/influxdb-handler.rb"
       }
     }
   }

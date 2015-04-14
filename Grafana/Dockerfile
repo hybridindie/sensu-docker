@@ -14,7 +14,6 @@ ADD grafana-run.sh /tmp/
 
 ADD supervisor.conf /etc/supervisor/conf.d/supervisord.conf
 
-VOLUME /opt/grafana/conf
 EXPOSE 3000
 
 CMD ["/tmp/grafana-run.sh"]

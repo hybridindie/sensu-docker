@@ -42,15 +42,17 @@ There is a volume shared from the Sensu server container in `/etc/sensu/conf.d`.
 
 `sudo docker exec -t sensudocker_sensu_1 supervisorctl restart sensu-server`
 
-_there is a metrics version in progress that can be stood up with_
+Load Sensu with Metrics
+-----------------------
+
+There is a metric configuration that adds [InfluxDB](http://influxdb.com) and [Grafana](http://www.grafana.org) to the base stack. The Grafana dashboard is available at http://[your-server-ip]:4000 and InfluxDB's dashboard is available at http://[your-server-ip]:8083
 
 ```
 sudo docker-compose -f metrics.yml build
 sudo docker-compose -f metrics.yml up
 ```
 
-_This adds Grafana and InfluxDB for metrics_
-
+The root password for InfluxDB is available in the `/usr/local/etc/sensu-docker/sensu.env` as is the sensu user used by Sensu to push its time series to InfluxDB.
 
 Connecting a new Ubuntu Client
 -----------------------

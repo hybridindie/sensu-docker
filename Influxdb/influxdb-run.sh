@@ -20,4 +20,23 @@ cat << EOF > /etc/sensu/config.json
 }
 EOF
 
+/etc/init.d/influxdb start
+
+until (curl -X POST 'http://localhost:8086/cluster_admins/root?u=root&p=root' \
+            -d '{"password": "'"$INFLUXDB_ROOT_PASSWD"'"}' 2>/dev/null) \
+            do sleep 1; done
+echo 'Changed "root" password'
+
+until (curl -X POST 'http://localhost:8086/db?u=root&p='"$INFLUXDB_ROOT_PASSWD" \
+            -d '{"name": "sensu"}' 2>/dev/null) do sleep 1; done
+echo 'Created database "sensu"'
+
+until (curl -X POST 'http://localhost:8086/db/sensu/users?u=root&p='"$INFLUXDB_ROOT_PASSWD" \
+            -d '{"name": "sensu", "password": "'"$INFLUXDB_PASSWD"'"}' 2>/dev/null) \
+            do sleep 1; done
+echo 'Created User "sensu"'
+
+/etc/init.d/influxdb stop
+sleep 3
+
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
