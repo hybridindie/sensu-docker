@@ -161,7 +161,7 @@ cat << EOF > /etc/sensu/conf.d/sensu-server.json
   }
 EOF
 
-# Set by the sensu-metrics.yml
+# Set by the metrics.yml
 if [ ! -z "$SENSU_METRICS" ] ; then
 
   echo "Downloading InfluxDB Handler"
@@ -197,11 +197,11 @@ EOF
   cat << EOF > /etc/sensu/conf.d/influxdb-command.json
   {
     "checks": {
-      "sensu-metrics-apache2": {
+      "sensu-metrics-grafana": {
         "handlers": [
           "default"
         ],
-        "command": "/etc/sensu/plugins/processes/check-procs.rb -p apache2 -C 1 -w 4 -c 5",
+        "command": "/etc/sensu/plugins/processes/check-procs.rb -p grafana-server -C 1 -w 4 -c 5",
         "interval": 60,
         "occurrences": 2,
         "refresh": 300,

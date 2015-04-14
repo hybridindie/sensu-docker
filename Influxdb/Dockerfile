@@ -3,8 +3,8 @@ MAINTAINER John Dilts <john.dilts@enstratius.com>
 
 RUN apt-get update && apt-get install -y wget curl git-core supervisor
 
-ADD certs /tmp/ssl_certs
-ADD install-sensu.sh /tmp/
+ADD https://raw.githubusercontent.com/jbrien/sensu-docker/compose/support/install-sensu.sh /tmp/
+RUN chmod +x /tmp/install-sensu.sh
 RUN /tmp/install-sensu.sh
 
 ADD influxdb-setup.sh /tmp/influxdb-setup.sh
