@@ -45,19 +45,28 @@ There is a volume shared from the Sensu server container in `/etc/sensu/conf.d`.
 Load Sensu with Metrics
 -----------------------
 
-There is a metric configuration that adds [InfluxDB](http://influxdb.com) and [Grafana](http://www.grafana.org) to the base stack. The Grafana dashboard is available at http://[your-server-ip]:4000 and InfluxDB's dashboard is available at http://[your-server-ip]:8083
+There is a metric configuration that adds [InfluxDB](http://influxdb.com) and [Grafana](http://www.grafana.org) to the base stack. The Grafana dashboard is available at http://[your-server-ip]:4000 and InfluxDB's dashboard is available at http://[your-server-ip]:8083.
 
 ```
 sudo docker-compose -f metrics.yml build
 sudo docker-compose -f metrics.yml up
 ```
 
+There is an environment variable for Grafana's dashboard to be able to connect to InfluxDB, `INFLUXDB_ENV_IP`, that defaults to `localhost`. Sensu needs a public IP or URL (without the http://) for InfluxDB to make queries with it's API.
+
+```
+INFLUXDB_EXT_IP=www.example.com sudo docker-compose -f metrics.yml up
+```
+
 The root password for InfluxDB is available in the `/usr/local/etc/sensu-docker/sensu.env` as is the sensu user used by Sensu to push its time series to InfluxDB.
+
+Exploring the Metric Series
+---------------------------
 
 After a few minutes you can log into InfluxDB with the sensu username and password and using `sensu` as the database (The sensu user is restricted to just seeing the data in the sensu database and can not log in otherwise). The data is InfluxDB is disposable; so each restart of the InfluxDB container will destroy any historical data.
 
-* Select `Explor Data` in the header
-* putting `list series` in the Query fields will show all the metrics being collected
+* Select `Explore Data` in the header
+* putting `list series` in the Query fields will show all the metric series being collected
 * putting `select * from /.*/ limit 5` will show & graph the last five results for each of the time series
 
 Other Queries working out of the box
@@ -67,6 +76,11 @@ select * from cpu_total_user where host =~ /sensu-server/
 select mean(value) from cpu_total_idle group by time(30s) where time > now() - 1d and host =~ /sensu-server/
 select mean(value) from load_avg_()
 ```
+
+Development
+-----------
+
+There is a [Vagrant](http://vagrantup.com) file provided in this repository that will install both Docker and Docker Compose. All necessary ports are setup for development and defaults will work as expected. The contents of this repository are located in `/vagrant` when the VM come up.
 
 Connecting a new Ubuntu Client
 -----------------------

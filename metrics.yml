@@ -36,6 +36,8 @@ grafana:
   build: ./Grafana
   env_file:
     - /usr/local/etc/sensu-docker/sensu.env
+  environment:
+    - INFLUXDB_EXT_IP=localhost
   volumes:
     - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
     - /opt/grafana/conf:/opt/grafana/conf
