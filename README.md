@@ -52,7 +52,7 @@ sudo docker-compose -f metrics.yml build
 sudo docker-compose -f metrics.yml up
 ```
 
-There is an environment variable for Grafana's dashboard to be able to connect to InfluxDB, `INFLUXDB_ENV_IP`, that defaults to `localhost`. Sensu needs a public IP or URL (without the http://) for InfluxDB to make queries with it's API.
+There is an environment variable for Grafana's dashboard to be able to connect to InfluxDB, `INFLUXDB_ENV_IP`, that defaults to `localhost`. Grafana needs a public IP or URL (without the http://) for InfluxDB to make queries with it's API.
 
 ```
 INFLUXDB_EXT_IP=www.example.com sudo docker-compose -f metrics.yml up
@@ -74,7 +74,7 @@ Other Queries working out of the box
 ```
 select * from cpu_total_user where host =~ /sensu-server/
 select mean(value) from cpu_total_idle group by time(30s) where time > now() - 1d and host =~ /sensu-server/
-select mean(value) from load_avg_()
+select mean(value) from load_avg_five
 ```
 
 Development
@@ -92,7 +92,7 @@ make sure you have `wget` installed and run install_client.sh
 ```
 sudo ./install_client.sh
 ```
-Copy the client `cert.pem` and `key.pem` the the `/etc/sensu/ssl` folder.
+Copy the client `cert.pem` and `key.pem` from the `/usr/local/etc/sensu-docker/client` folder on the Docker host.
 Modify the client config /etc/sensu/config.json with the necessary information.
 
 Replace `%RABBITMQ_ADDR_OR_IP%` with the address for RabbitMQ from the docker-compose launch.
@@ -121,3 +121,10 @@ Adjust subscriptions to meet your needs
   }
 }
 ```
+
+In Progress & Todo
+------------------
+
+* Data persistance where it makes sense
+* Documentation for running in production
+* Documentation to scale InfluxDB / RabbitMQ (Docker Swarm?, Kubernetes?, CoreOS?)
