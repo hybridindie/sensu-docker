@@ -85,7 +85,7 @@ There is a [Vagrant](http://vagrantup.com) file provided in this repository that
 Connecting a new Ubuntu Client
 -----------------------
 
-Copy the `/usr/local/etc/sensu-docker/client` folder from the project root (_generated when setting up the server_) to the client along with the `install_client.sh` script. If you no longer have this folder you will need to replace the certs on the server after running the script again.
+Copy the `/usr/local/etc/sensu-docker/client` folder from the Docker host (_generated when setting up the server_) to the client along with the `install_client.sh` script. If you no longer have this folder you will need to replace the certs on the server after running the script again.
 
 make sure you have `wget` installed and run install_client.sh
 
@@ -96,6 +96,7 @@ Copy the client `cert.pem` and `key.pem` from the `/usr/local/etc/sensu-docker/c
 Modify the client config /etc/sensu/config.json with the necessary information.
 
 Replace `%RABBITMQ_ADDR_OR_IP%` with the address for RabbitMQ from the docker-compose launch.
+Replace `%RABBITMQ_PASSWD%` with the password for RabbitMQ found in the /usr/local/etc/sensu-docker/sensu.env file.
 Replace `%NODE_NAME%` with a unique name to identify this client.
 Replace `%HOSTNAME%` with the hostname or IP of the client.
 
@@ -111,7 +112,7 @@ Adjust subscriptions to meet your needs
     "port": 5671,
     "host": "%RABBITMQ_ADDR_OR_IP%",
     "user": "sensu",
-    "password": "pass",
+    "password": "%RABBITMQ_PASSWD%",
     "vhost": "/sensu"
   },
   "client": {
@@ -126,5 +127,6 @@ In Progress & Todo
 ------------------
 
 * Data persistance where it makes sense
+* Client install script for Yum based distros
 * Documentation for running in production
 * Documentation to scale InfluxDB / RabbitMQ (Docker Swarm?, Kubernetes?, CoreOS?)
