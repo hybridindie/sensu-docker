@@ -12,6 +12,7 @@ redis:
     - /usr/local/etc/sensu-docker/sensu.env
   volumes:
     - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
+    - /var/log/sensu:/var/log/sensu
   links:
     - rabbitmq
   expose:
@@ -41,6 +42,7 @@ grafana:
   volumes:
     - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
     - /opt/grafana/conf:/opt/grafana/conf
+    - /var/log/sensu:/var/log/sensu
   links:
     - rabbitmq
     - influxdb

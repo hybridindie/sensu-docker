@@ -4,6 +4,7 @@ rabbitmq:
     - /usr/local/etc/sensu-docker/sensu.env
   volumes:
     - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
+    - /var/log/sensu:/var/log/sensu
   ports:
     - "5671:5671"
 redis:
@@ -12,6 +13,7 @@ redis:
     - /usr/local/etc/sensu-docker/sensu.env
   volumes:
     - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
+    - /var/log/sensu:/var/log/sensu
   links:
     - rabbitmq
   expose:
