@@ -1,4 +1,4 @@
-cat << EOF > /etc/sensu/docker-config.json
+cat << EOF > /etc/sensu/conf.d/sensu-config.json
 {
   "rabbitmq": {
     "ssl": {

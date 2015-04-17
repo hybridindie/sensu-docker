@@ -1,5 +1,5 @@
 #!/bin/bash
-cat << EOF > /etc/sensu/docker-config.json
+cat << EOF > /etc/sensu/conf.d/influxdb-config.json
 {
   "rabbitmq": {
     "ssl": {
