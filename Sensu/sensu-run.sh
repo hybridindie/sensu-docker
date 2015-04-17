@@ -239,22 +239,22 @@ EOF
 EOF
   echo "Wrote out /etc/sensu/conf.d/sensu-metrics.json"
 
-  cat << EOF > /etc/sensu/conf.d/docker-metrics.json
-    {
-      "checks": {
-        "docker": {
-          "handlers": [
-            "default"
-          ],
-          "command": "/etc/sensu/plugins/docker/check-container-metrics.rb",
-          "interval": 60,
-          "occurrences": 2,
-          "refresh": 300,
-          "subscribers": [ "docker-metrics" ]
-        }
+cat << EOF > /etc/sensu/conf.d/docker-metrics.json
+  {
+    "checks": {
+      "docker": {
+        "handlers": [
+          "default"
+        ],
+        "command": "/etc/sensu/plugins/docker/check-container-metrics.rb",
+        "interval": 60,
+        "occurrences": 2,
+        "refresh": 300,
+        "subscribers": [ "docker-metrics" ]
       }
     }
-  EOF
+  }
+EOF
   echo "Wrote out /etc/sensu/conf.d/docker-metrics.json"
 
 fi
