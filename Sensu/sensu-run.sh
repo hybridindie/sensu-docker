@@ -11,7 +11,7 @@ SENSU_CLIENT_CONFIG_URL=${SENSU_CLIENT_CONFIG_URL:-}
 if [ ! -z "$SENSU_CONFIG_URL" ] ; then
   wget --no-check-certificate -O /etc/sensu/config.json $SENSU_CONFIG_URL
 else
-  cat << EOF > /etc/sensu/conf.d/docker-config.json
+  cat << EOF > /etc/sensu/docker-config.json
   {
     "rabbitmq": {
       "ssl": {

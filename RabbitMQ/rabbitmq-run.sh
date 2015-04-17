@@ -1,5 +1,5 @@
 #!/bin/bash
-cat << EOF > /etc/sensu/conf.d/rabbitmq-config.json
+cat << EOF > /etc/sensu/rabbitmq-config.json
 {
   "rabbitmq": {
     "ssl": {

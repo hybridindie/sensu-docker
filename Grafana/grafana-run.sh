@@ -1,5 +1,5 @@
 #!/bin/bash
-cat << EOF > /etc/sensu/conf.d/grafana-config.json
+cat << EOF > /etc/sensu/grafana-config.json
 {
   "rabbitmq": {
     "ssl": {

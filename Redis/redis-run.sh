@@ -1,4 +1,4 @@
-cat << EOF > /etc/sensu/conf.d/sensu-config.json
+cat << EOF > /etc/sensu/redis-config.json
 {
   "rabbitmq": {
     "ssl": {
