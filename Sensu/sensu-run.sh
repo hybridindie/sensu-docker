@@ -193,7 +193,7 @@ EOF
 EOF
   echo "Wrote out /etc/sensu/conf.d/config-relay.json"
 
-  cat << EOF > /etc/sensu/conf.d/influxdb-command.json
+  cat << EOF > /etc/sensu/conf.d/sensu-metrics.json
   {
     "checks": {
       "sensu-metrics-grafana": {
@@ -211,19 +211,54 @@ EOF
         "handlers": [ "influxdb" ],
         "command": "/etc/sensu/plugins/system/cpu-metrics.rb",
         "interval": 30,
-        "subscribers": [ "default" ]
+        "subscribers": [ "default-metrics" ]
       },
       "load_metrics": {
         "type": "metric",
         "handlers": [ "influxdb" ],
         "command": "/etc/sensu/plugins/system/load-metrics.rb",
         "interval": 30,
-        "subscribers": [ "default" ]
+        "subscribers": [ "default-metrics" ]
+      },
+      "memory_metrics": {
+        "type": "metric",
+        "handlers": [ "influxdb" ],
+        "command": "/etc/sensu/plugins/system/memory-metrics.rb",
+        "interval": 30,
+        "subscribers": [ "default-metrics" ]
+      },
+      "interface_metrics": {
+        "type": "metric",
+        "handlers": [ "influxdb" ],
+        "command": "/etc/sensu/plugins/system/interface-metrics.rb",
+        "interval": 30,
+        "subscribers": [ "default-metrics" ]
       }
     }
   }
 EOF
   echo "Wrote out /etc/sensu/conf.d/sensu-metrics.json"
+
+  cat << EOF > /etc/sensu/conf.d/docker-metrics.json
+    {
+      "checks": {
+        "docker": {
+          "handlers": [
+            "default"
+          ],
+          "command": "/etc/sensu/plugins/docker/check-container-metrics.rb",
+          "interval": 60,
+          "occurrences": 2,
+          "refresh": 300,
+          "subscribers": [ "docker-metrics" ]
+        }
+      }
+    }
+  EOF
+  echo "Wrote out /etc/sensu/conf.d/docker-metrics.json"
+
 fi
+
+
 
 /usr/bin/supervisord -c /etc/supervisor/conf.d/sensu.conf

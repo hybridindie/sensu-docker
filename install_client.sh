@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "Adding Sensu Apt Repo"
 wget -q http://repos.sensuapp.org/apt/pubkey.gpg -O- | apt-key add -
 echo "deb http://repos.sensuapp.org/apt sensu main" > /etc/apt/sources.list.d/sensu.list
 
@@ -9,6 +10,7 @@ cat << EOF > /etc/default/sensu
   EMBEDDED_RUBY=true
   LOG_LEVEL=info
 EOF
+echo "Installed Sensu"
 ln -sf /opt/sensu/embedded/bin/ruby /usr/bin/ruby
 /opt/sensu/embedded/bin/gem install redphone --no-rdoc --no-ri
 /opt/sensu/embedded/bin/gem install mail --no-rdoc --no-ri --version 2.5.4
