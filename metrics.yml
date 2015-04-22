@@ -1,23 +1,13 @@
 rabbitmq:
-  build: ./RabbitMQ
-  env_file:
-    - /usr/local/etc/sensu-docker/sensu.env
-  volumes:
-    - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
-    - /var/log/sensu:/var/log/sensu
-  ports:
-    - "5671:5671"
+  extends:
+    file: common.yml
+    service: rabbitmq
 redis:
-  build: ./Redis
-  env_file:
-    - /usr/local/etc/sensu-docker/sensu.env
-  volumes:
-    - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
-    - /var/log/sensu:/var/log/sensu
+  extends:
+    file: common.yml
+    service: redis
   links:
     - rabbitmq
-  expose:
-    - "6379"
 influxdb:
   build: ./Influxdb
   env_file:
@@ -47,18 +37,10 @@ grafana:
   ports:
     - "4000:80"
 sensu:
-  build: ./Sensu
-  env_file:
-    - /usr/local/etc/sensu-docker/sensu.env
-  environment:
-    - SENSU_METRICS=true
-  volumes:
-    - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
-    - /var/log/sensu:/var/log/sensu
-    - /etc/sensu/conf.d:/etc/sensu/conf.d
+  extends:
+    file: common.yml
+    service: sensu
   links:
     - redis
     - rabbitmq
     - influxdb
-  ports:
-    - "3000:3000"

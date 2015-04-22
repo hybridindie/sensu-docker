@@ -1,0 +1,30 @@
+rabbitmq:
+  build: ./RabbitMQ
+  env_file:
+    - /usr/local/etc/sensu-docker/sensu.env
+  volumes:
+    - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
+    - /var/log/sensu:/var/log/sensu
+  ports:
+    - "5671:5671"
+redis:
+  build: ./Redis
+  env_file:
+    - /usr/local/etc/sensu-docker/sensu.env
+  volumes:
+    - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
+    - /var/log/sensu:/var/log/sensu
+  expose:
+    - "6379"
+sensu:
+  build: ./Sensu
+  env_file:
+    - /usr/local/etc/sensu-docker/sensu.env
+  environment:
+    - SENSU_METRICS=false
+  volumes:
+    - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
+    - /var/log/sensu:/var/log/sensu
+    - /etc/sensu/conf.d:/etc/sensu/conf.d
+  ports:
+    - "3000:3000"
