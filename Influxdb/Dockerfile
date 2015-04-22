@@ -13,6 +13,8 @@ RUN /tmp/install-sensu.sh
 ADD influxdb-run.sh /tmp/influxdb-run.sh
 
 ADD supervisor.conf /etc/supervisor/conf.d/supervisord.conf
+
+VOLUME /opt/influxdb
 EXPOSE 8083
 EXPOSE 8086
 

@@ -20,6 +20,7 @@ ADD apache2-grafana.conf /etc/apache2/sites-enabled/grafana.conf
 
 ADD supervisor.conf /etc/supervisor/conf.d/supervisord.conf
 
+VOLUME /usr/share/grafana
 EXPOSE 80
 
 CMD ["/tmp/grafana-run.sh"]

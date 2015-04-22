@@ -26,11 +26,8 @@ influxdb:
     - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
   links:
     - rabbitmq
-  expose:
-    - "8083"
-    - "8086"
-    - "8090"
-    - "8099"
+  volumes:
+    - /opt/influxdb/shared/:/opt/influxdb/shared/
   ports:
     - "8086:8086"
     - "8083:8083"
@@ -42,7 +39,7 @@ grafana:
     - INFLUXDB_EXT_IP=localhost
   volumes:
     - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
-    - /opt/grafana/conf:/opt/grafana/conf
+    - /usr/share/grafana:/usr/share/grafana
     - /var/log/sensu:/var/log/sensu
   links:
     - rabbitmq
