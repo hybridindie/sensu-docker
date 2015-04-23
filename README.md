@@ -29,7 +29,7 @@ Generate the environment variables and ssl certs for RabbitMQ and Sensu. The ssl
 
 ```
 cd sensu-docker
-sudo ./setup_sensu_docker.sh generate
+sudo ./setup-sensu-docker.sh generate
 sudo docker-compose -f base.yml build
 sudo docker-compose -f base.yml up
 ```
