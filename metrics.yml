@@ -16,8 +16,6 @@ influxdb:
     - /usr/local/etc/sensu-docker:/usr/local/etc/sensu-docker
   links:
     - rabbitmq
-  volumes:
-    - /opt/influxdb/shared/:/opt/influxdb/shared/
   ports:
     - "8086:8086"
     - "8083:8083"
